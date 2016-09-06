@@ -16,7 +16,7 @@
 
       <section class="task1" style="display:none;">
         <p class="content-text">
-          San Felipe (which includes Casco Viejo) is enclosed by the districts of Santa Ana and El Chorillo. Together, these neighborhoods make up one of the densest and lowest income urban areas within Panama Metropolitan Region. <a class="view-on-map" href="#" onclick="requestMap()">View on map <i class="icon-map"></i></a>
+          San Felipe (which includes Casco Viejo) is enclosed by the districts of Santa Ana and El Chorillo. Together, these neighborhoods make up one of the densest and lowest income urban areas within Panama Metropolitan Region. <a class="view-on-map" href="#" onclick="requestMap()">View on map <span class="control globe"><span class="icon-globe"></span></span></a>
         </p>
         <p class="content-text">
           Over the past three census years, demographic and socioeconomic composition of Panama City neighborhoods have displayed noticable change. In particular, San Felipe, neighborhood containint the majority of Casco Viejo, has diverged relative to its surrounding areas.
@@ -55,6 +55,23 @@
         </div>
       </section>
       <section class="charts" style="display:none;">
+        <div class="multibar-chart-container">
+            <div class="header">
+                <div class="navigation-title">Regional Comparison</div>
+                <div class="chart-navigation">
+                    <p>Compare Region by:</p>
+                    <ul id="charts-list">
+
+                    </ul>
+                </div>
+
+            </div>
+            <div class="multibar-content">
+                <div id="multibarChart">
+                    <svg></svg>
+                </div>
+            </div>
+        </div>
         <div class="navigation">
           <button id="charts_back" class="button">Back</button>
           <button id="charts_continue" class="button">Continue</button>
@@ -143,4 +160,3 @@
     </div>
   </div>
 </div>
-  

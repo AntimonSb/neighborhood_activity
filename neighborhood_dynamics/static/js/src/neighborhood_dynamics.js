@@ -71,6 +71,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       $("#task1_continue").click(function() {
         $(".task1").hide();
         $(".charts").show();
+        initMultibarChart();
       });
       $("#task1_submit").click(function() {
         var handlerUrl = runtime.handlerUrl(element, 'submit_task1');

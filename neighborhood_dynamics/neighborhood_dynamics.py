@@ -1,17 +1,27 @@
 """TO-DO: Write a description of what this XBlock is."""
 
 import pkg_resources
+import urllib
+import os
+import json
+
+from collections import OrderedDict
+from functools import partial
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, Float
 from xblock.fragment import Fragment
 from django.template import Context,Template
 
+from openpyxl import load_workbook
+from webob.response import Response
+
 
 class NeighborhoodDynamicsXBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
     """
+    json_data = String(help="JSON data from excel file", default="None", scope=Scope.content)
     
     display_name = String(display_name="Display Name",
                           default="Neighborhood Dynamics",
@@ -122,6 +132,13 @@ class NeighborhoodDynamicsXBlock(XBlock):
         }))
         
         frag = Fragment(html)
+        frag.add_css(self.resource_string("static/css/multibar_charts.css"))
+        frag.add_css(self.resource_string("static/css/nvd3.css"))
+        frag.add_javascript(self.resource_string("static/js/src/d3.v3.js"))
+        frag.add_javascript(self.resource_string("static/js/src/nvd3.js"))
+        frag.add_javascript("var json_data ={}".format(self.json_data))
+        frag.add_javascript(self.resource_string("static/js/src/multibar_charts.js"))
+#        frag.initialize_js('initMultibarChart')
         frag.add_css(self.resource_string("static/css/neighborhood_dynamics.css"))
         frag.add_javascript(self.resource_string("static/js/src/neighborhood_dynamics.js"))
         frag.initialize_js('NeighborhoodDynamicsXBlock')
@@ -160,29 +177,62 @@ class NeighborhoodDynamicsXBlock(XBlock):
         frag.initialize_js('StudioEdit')
         return frag
 
-    @XBlock.json_handler
-    def studio_submit(self, data, suffix=''):
+    @XBlock.handler
+    def studio_submit(self, request, suffix=''):
         """
         Called when submitting the form in Studio.
         """
-        self.display_name = data.get('display_name')
-        self.san_felipe_lower = data.get('san_felipe_lower')
-        self.san_felipe_upper = data.get('san_felipe_upper')
-        self.santa_ana_lower = data.get('santa_ana_lower')
-        self.santa_ana_upper = data.get('santa_ana_upper')
-        self.el_chorillo_lower = data.get('el_chorillo_lower')
-        self.el_chorillo_upper = data.get('el_chorillo_upper')
-        self.san_felipe_1 = data.get('san_felipe_1')
-        self.san_felipe_2 = data.get('san_felipe_2')
-        self.san_felipe_3 = data.get('san_felipe_3')
-        self.santa_ana_1 = data.get('santa_ana_1')
-        self.santa_ana_2 = data.get('santa_ana_2')
-        self.santa_ana_3 = data.get('santa_ana_3')
-        self.el_chorillo_1 = data.get('el_chorillo_1')
-        self.el_chorillo_2 = data.get('el_chorillo_2')
-        self.el_chorillo_3 = data.get('el_chorillo_3')
+        data = request.POST
+        self.display_name = data['display_name']
+        self.san_felipe_lower = data['san_felipe_lower']
+        self.san_felipe_upper = data['san_felipe_upper']
+        self.santa_ana_lower = data['santa_ana_lower']
+        self.santa_ana_upper = data['santa_ana_upper']
+        self.el_chorillo_lower = data['el_chorillo_lower']
+        self.el_chorillo_upper = data['el_chorillo_upper']
+        self.san_felipe_1 = data['san_felipe_1']
+        self.san_felipe_2 = data['san_felipe_2']
+        self.san_felipe_3 = data['san_felipe_3']
+        self.santa_ana_1 = data['santa_ana_1']
+        self.santa_ana_2 = data['santa_ana_2']
+        self.santa_ana_3 = data['santa_ana_3']
+        self.el_chorillo_1 = data['el_chorillo_1']
+        self.el_chorillo_2 = data['el_chorillo_2']
+        self.el_chorillo_3 = data['el_chorillo_3']
 
-        return {'result': 'success'}
+        if not isinstance(data['excel'], basestring):
+            upload = data['excel']
+
+            # get workbook
+            workbook = load_workbook(filename=upload.file, read_only=True)
+            sheets = []
+            for worksheet in workbook:
+                sheet = {
+                        "name": worksheet.title,
+                        "rows": []
+                    }
+                for row in worksheet.iter_rows():
+                    sheet_row = {
+                        "key": None,
+                        "values": []
+                    }
+                    cell_num = 0
+                    # first row will be key for iteration, ex. "Country name"
+                    for cell in row:
+                        if cell_num is 0:
+                            sheet_row["key"] = cell.value
+                        else:
+                            sheet_row["values"].append(cell.value)
+                        cell_num += 1
+                    sheet['rows'].append(sheet_row)
+
+                sheets.append(sheet)
+
+            self.json_data = json.dumps(sheets)
+
+        return Response(json_body={
+            'result': "success"
+        })
       
     @XBlock.json_handler
     def submit_task1(self, data, suffix=''):
@@ -230,6 +280,20 @@ class NeighborhoodDynamicsXBlock(XBlock):
             }
           }
       
+    def _file_storage_name(self, filename):
+        # pylint: disable=no-member
+        """
+        Get file path of storage.
+        """
+        path = (
+            '{loc.block_type}/{loc.block_id}'
+            '/{filename}'.format(
+                    loc=self.location,
+                    filename=filename
+            )
+        )
+        return path
+
     
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
