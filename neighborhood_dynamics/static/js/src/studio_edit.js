@@ -3,6 +3,8 @@ function StudioEdit(runtime, element) {
     var data = new FormData();
     var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
     data.append('display_name', $(element).find('input[name=display_name]').val());
+    data.append('display_description', $(element).find('input[name=display_description]').val());
+    data.append('thumbnail', $(element).find('input[name=thumbnail]')[0].files[0]);
     data.append('excel', $(element).find('input[name=excel]')[0].files[0]);
     data.append('san_felipe_lower', $(element).find('input[name=san_felipe_lower]').val());
     data.append('san_felipe_upper', $(element).find('input[name=san_felipe_upper]').val());

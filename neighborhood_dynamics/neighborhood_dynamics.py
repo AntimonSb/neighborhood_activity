@@ -15,6 +15,8 @@ from django.template import Context,Template
 
 from openpyxl import load_workbook
 from webob.response import Response
+from xmodule.contentstore.content import StaticContent
+from xmodule.contentstore.django import contentstore
 
 
 class NeighborhoodDynamicsXBlock(XBlock):
@@ -23,10 +25,10 @@ class NeighborhoodDynamicsXBlock(XBlock):
     """
     json_data = String(help="JSON data from excel file", default="None", scope=Scope.content)
     
-    display_name = String(display_name="Display Name",
-                          default="Neighborhood Dynamics",
-                          scope=Scope.settings,
-                          help="Name of Xblock.")
+#    display_name = String(display_name="Display Name",
+#                          default="Neighborhood Dynamics",
+#                          scope=Scope.settings,
+#                          help="Name of Xblock.")
     
     san_felipe_lower = Float(display_name="San Felipe Lower Bound",
                              default=1.0,
@@ -154,6 +156,7 @@ class NeighborhoodDynamicsXBlock(XBlock):
         template = Template(template_str)
         html = template.render(Context({
               'display_name': self.display_name,
+              'display_description': self.display_description,
               'san_felipe_lower': self.san_felipe_lower,
               'san_felipe_upper': self.san_felipe_upper,
               'santa_ana_lower': self.santa_ana_lower,
@@ -184,6 +187,7 @@ class NeighborhoodDynamicsXBlock(XBlock):
         """
         data = request.POST
         self.display_name = data['display_name']
+        self.display_description = data['display_description']
         self.san_felipe_lower = data['san_felipe_lower']
         self.san_felipe_upper = data['san_felipe_upper']
         self.santa_ana_lower = data['santa_ana_lower']
@@ -199,6 +203,28 @@ class NeighborhoodDynamicsXBlock(XBlock):
         self.el_chorillo_1 = data['el_chorillo_1']
         self.el_chorillo_2 = data['el_chorillo_2']
         self.el_chorillo_3 = data['el_chorillo_3']
+
+        if not isinstance(data['thumbnail'], basestring):
+            upload = data['thumbnail']
+
+            filename = self._file_storage_name(upload.file.name)
+            content_location = StaticContent.compute_location(self.location.course_key, filename)
+
+            chunked = upload.file.multiple_chunks()
+            sc_partial = partial(StaticContent, content_location, filename, upload.file.content_type)
+            if chunked:
+                content = sc_partial(upload.file.chunks())
+                tempfile_path = upload.file.temporary_file_path()
+            else:
+                content = sc_partial(upload.file.read())
+                tempfile_path = None
+
+            contentstore().save(content)
+
+            # readback the saved content - we need the database timestamp
+            readback = contentstore().find(content.location)
+            locked = getattr(content, 'locked', False)
+            self.background_url = StaticContent.serialize_asset_key_with_slash(content.location)
 
         if not isinstance(data['excel'], basestring):
             upload = data['excel']
