@@ -1,16 +1,12 @@
 /* Javascript for NeighborhoodDynamicsXBlock. */
 function NeighborhoodDynamicsXBlock(runtime, element) {
 
-    function updateCount(result) {
-        $('.count', element).text(result.count);
-    }
-
-    function requestMap() {              
-      parent.postMessage(JSON.stringify({action: 'openMap' }),'*'); 
-    }
-  
     $(function ($) {
       
+      $(".view-on-map").click(function() {
+        parent.postMessage(JSON.stringify({action: 'openMap' }),'*');
+      });
+
       function handleTask1(data){
         if(data.san_felipe){
           $("#task1_circle1").css("background", passed_color);

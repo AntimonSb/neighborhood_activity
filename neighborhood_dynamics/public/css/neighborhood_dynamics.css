@@ -116,13 +116,18 @@
   width: 100%;
 }
 
-.neighborhood_dynamics_block .icon-map {
-  font-size: 18px;
-
-  .icon-globe {
-    margin-left: 5px;
-    font-size: 24px;
-  }
+.neighborhood_dynamics_block span.myicon-map {
+  background-image: url(../img/map.png);
+  background-position: 0 0;
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  right: 0px;
+  z-index: 999;
 }
 
 .neighborhood_dynamics_block .view-on-map{
@@ -132,6 +137,8 @@
   text-transform: uppercase;
   color: white;
   margin-left: 20px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .neighborhood_dynamics_block .hint-link{

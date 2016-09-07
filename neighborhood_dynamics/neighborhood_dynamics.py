@@ -25,10 +25,10 @@ class NeighborhoodDynamicsXBlock(XBlock):
     """
     json_data = String(help="JSON data from excel file", default="None", scope=Scope.content)
     
-#    display_name = String(display_name="Display Name",
-#                          default="Neighborhood Dynamics",
-#                          scope=Scope.settings,
-#                          help="Name of Xblock.")
+    display_name = String(display_name="Display Name",
+                          default="Neighborhood Dynamics",
+                          scope=Scope.settings,
+                          help="Name of Xblock.")
     
     san_felipe_lower = Float(display_name="San Felipe Lower Bound",
                              default=1.0,
@@ -134,6 +134,9 @@ class NeighborhoodDynamicsXBlock(XBlock):
         }))
         
         frag = Fragment(html)
+        frag.add_css_url(
+            self.runtime.local_resource_url(
+                self, 'public/css/neighborhood_dynamics.css'))
         frag.add_css(self.resource_string("static/css/multibar_charts.css"))
         frag.add_css(self.resource_string("static/css/nvd3.css"))
         frag.add_javascript(self.resource_string("static/js/src/d3.v3.js"))
@@ -141,7 +144,6 @@ class NeighborhoodDynamicsXBlock(XBlock):
         frag.add_javascript("var json_data ={}".format(self.json_data))
         frag.add_javascript(self.resource_string("static/js/src/multibar_charts.js"))
 #        frag.initialize_js('initMultibarChart')
-        frag.add_css(self.resource_string("static/css/neighborhood_dynamics.css"))
         frag.add_javascript(self.resource_string("static/js/src/neighborhood_dynamics.js"))
         frag.initialize_js('NeighborhoodDynamicsXBlock')
         return frag
