@@ -7,7 +7,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
         parent.postMessage(JSON.stringify({action: 'openMap' }),'*');
       });
 
-      function handleTask1(data){
+      function handleTask1(data, el){
         if(data.san_felipe){
           $("#task1_circle1").css("background", passed_color);
         }
@@ -19,6 +19,9 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
         }
         if(data.san_felipe && data.santa_ana && data.el_chorillo){
           $("#task1_continue").removeAttr("disabled");
+          $(el).attr("disabled", true);
+        } else {
+          $(el).text("Try Again")
         }
       }
       
@@ -71,6 +74,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       });
       $("#task1_submit").click(function() {
         var handlerUrl = runtime.handlerUrl(element, 'submit_task1');
+        var el = this;
         var data = {
             'san_felipe_lower': $('#san_felipe_lower').val() ? $('#san_felipe_lower').val() : null,
             'san_felipe_upper': $('#san_felipe_upper').val() ? $('#san_felipe_upper').val() : null,
@@ -82,9 +86,12 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
         
         $.post(handlerUrl, JSON.stringify(data)).done(function (response) {
           if (response.result === 'success') {
-            handleTask1(response.data);
+            handleTask1(response.data, el);
           } else {
             runtime.notify('error', {msg: response.message});
+             $(el).attr("disabled", true);
+          } else {
+            $(el).text("Try Again")
           }
         });
       });
@@ -107,6 +114,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       });
       $("#task2_submit").click(function() {
         var handlerUrl = runtime.handlerUrl(element, 'submit_task2');
+        var el = this;
         var data = {
             'san_felipe_1': $('#san_felipe_1').val() ? $('#san_felipe_1').val() : null,
             'san_felipe_2': $('#san_felipe_2').val() ? $('#san_felipe_2').val() : null,
@@ -121,7 +129,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
         
         $.post(handlerUrl, JSON.stringify(data)).done(function (response) {
           if (response.result === 'success') {
-            handleTask2(response.data);
+            handleTask2(response.data, el);
           } else {
             runtime.notify('error', {msg: response.message});
           }
