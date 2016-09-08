@@ -19,6 +19,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
         }
         if(data.san_felipe && data.santa_ana && data.el_chorillo){
           $("#task1_continue").removeAttr("disabled");
+          initMultibarChart();
           $(el).attr("disabled", true);
         } else {
           $(el).text("Try Again")
@@ -70,7 +71,6 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       $("#task1_continue").click(function() {
         $(".task1").hide();
         $(".charts").show();
-        initMultibarChart();
       });
       $("#task1_submit").click(function() {
         var handlerUrl = runtime.handlerUrl(element, 'submit_task1');
