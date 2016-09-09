@@ -22,7 +22,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
           initMultibarChart();
           $(el).attr("disabled", true);
         } else {
-          $(el).text("Try Again")
+          $(el).text("Try Again");
         }
       }
       
@@ -61,6 +61,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       
       var passed_color = "#809342"
       $("#begin").click(function() {
+        debugger;
         $(".begin").hide();
         $(".task1").show();
       });
@@ -88,10 +89,7 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
           if (response.result === 'success') {
             handleTask1(response.data, el);
           } else {
-            runtime.notify('error', {msg: response.message});
-             $(el).attr("disabled", true);
-          } else {
-            $(el).text("Try Again")
+             runtime.notify('error', {msg: response.message});
           }
         });
       });
