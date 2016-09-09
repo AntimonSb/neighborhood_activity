@@ -61,7 +61,6 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       
       var passed_color = "#809342"
       $("#begin").click(function() {
-        debugger;
         $(".begin").hide();
         $(".task1").show();
       });

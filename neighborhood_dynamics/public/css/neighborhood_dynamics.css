@@ -11,10 +11,10 @@
 
 .neighborhood_dynamics_block .content {
   position: fixed;
-  top: 5%;
+  top: 10%;
   left: 10%;
   padding: 0;
-  height: 95%;
+  height: 85%;
   width: 80%;
   overflow: auto;
   font-weight: 100;
@@ -28,7 +28,7 @@
 }
 
 .neighborhood_dynamics_block p {
-  padding: 25px 15px 0 0 !important;
+  padding: 5px 15px 0 0 !important;
   font-size: 14px !important;
   font-family: "Roboto Condensed" !important;
 }
@@ -106,11 +106,12 @@
   margin: 0;
 }
 
-.neighborhood_dynamics_block .button-container {
+.neighborhood_dynamics_block .begin-container {
   text-align: center;
   width: 100%;
   display: inline-block;
-  padding-top: 20px;
+  position: fixed;
+  bottom: 50px;
 }
 
 .neighborhood_dynamics_block .main-content {
@@ -249,8 +250,9 @@
 
 .neighborhood_dynamics_block .navigation{
   position: fixed;
-  width: 80%;
+  width: 50%;
   bottom: 24px;
+  right: 10%;
   text-align: right;
   vertical-align: bottom;
 }
