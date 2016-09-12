@@ -181,8 +181,8 @@ function initMultibarChart() {
     function createGraph() {
         nv.addGraph({
             generate: function () {
-                var width = nv.utils.windowSize().width * 0.66,
-                    height = nv.utils.windowSize().height * 0.60,
+                var width = nv.utils.windowSize().width * 0.6,
+                    height = nv.utils.windowSize().height * 0.5,
                     yRange = getRangeForY(data.max_y_range),
                     numberOfYticks = yRange > 1 ? 5 : 10,
                     tickFormat = data.tick_format;
