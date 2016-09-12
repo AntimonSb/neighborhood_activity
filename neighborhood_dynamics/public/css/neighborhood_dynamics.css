@@ -77,6 +77,7 @@
 .neighborhood_dynamics_block .begin{
   position: fixed;
   top: 50%;
+  transform: translateY(-25%);
   left: 0;
   padding: 0;
   margin: 0;
@@ -103,14 +104,13 @@
   color: white !important;
   padding: 50px;
   text-align: center;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .neighborhood_dynamics_block .begin-container {
   text-align: center;
   width: 100%;
   display: inline-block;
-  position: fixed;
   bottom: 50px;
 }
 
