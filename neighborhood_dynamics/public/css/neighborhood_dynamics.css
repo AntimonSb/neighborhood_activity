@@ -75,9 +75,6 @@
 }
 
 .neighborhood_dynamics_block .begin{
-  position: fixed;
-  top: 50%;
-  transform: translateY(-25%);
   left: 0;
   padding: 0;
   margin: 0;
@@ -111,7 +108,6 @@
   text-align: center;
   width: 100%;
   display: inline-block;
-  bottom: 50px;
 }
 
 .neighborhood_dynamics_block .main-content {
@@ -249,10 +245,6 @@
 }
 
 .neighborhood_dynamics_block .navigation{
-  position: fixed;
-  width: 50%;
-  bottom: 24px;
-  right: 10%;
   text-align: right;
   vertical-align: bottom;
 }

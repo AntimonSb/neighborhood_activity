@@ -181,8 +181,8 @@ function initMultibarChart() {
     function createGraph() {
         nv.addGraph({
             generate: function () {
-                var width = nv.utils.windowSize().width * 0.6,
-                    height = nv.utils.windowSize().height * 0.5,
+                var width = nv.utils.windowSize().width * 0.72,
+                    height = nv.utils.windowSize().height * 0.6,
                     yRange = getRangeForY(data.max_y_range),
                     numberOfYticks = yRange > 1 ? 5 : 10,
                     tickFormat = data.tick_format;
@@ -214,10 +214,10 @@ function initMultibarChart() {
                 svg.transition().duration(0).call(chart);
 
                 svg.append("text")
-                    .attr("x", 365)
+                    .attr("x", 150)
                     .attr("y", 15)
                     .attr("text-anchor", "middle")
-                    .text("Izolate by region: ");
+                    .text("Isolate by region: ");
 
                 // add titles to the axes
                 svg.append("text")
@@ -251,8 +251,8 @@ function initMultibarChart() {
             },
             callback: function (graph) {
                 nv.utils.windowResize(function () {
-                    var width = nv.utils.windowSize().width;
-                    var height = nv.utils.windowSize().height;
+                    var width = nv.utils.windowSize().width*0.72;
+                    var height = nv.utils.windowSize().height*0.6;
                     graph.width(width).height(height);
 
                     d3.select('#multibarChart svg')

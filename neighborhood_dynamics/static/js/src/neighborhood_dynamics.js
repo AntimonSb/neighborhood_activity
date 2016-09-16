@@ -63,14 +63,18 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       $("#begin").click(function() {
         $(".begin").hide();
         $(".task1").show();
+        $(".content").scrollTop(0);
+
       });
       $("#task1_back").click(function() {
         $(".task1").hide();
         $(".begin").show();
+        $(".content").scrollTop(0);
       });
       $("#task1_continue").click(function() {
         $(".task1").hide();
         $(".charts").show();
+        $(".content").scrollTop(0);
       });
       $("#task1_submit").click(function() {
         var handlerUrl = runtime.handlerUrl(element, 'submit_task1');
@@ -96,18 +100,22 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
       $("#charts_back").click(function() {
         $(".charts").hide();
         $(".task1").show();
+        $(".content").scrollTop(0);
       });
       $("#charts_continue").click(function() {
         $(".charts").hide();
         $(".task2").show();
+        $(".content").scrollTop(0);
       });
       $("#task2_back").click(function() {
         $(".task2").hide();
         $(".charts").show();
+        $(".content").scrollTop(0);
       });
       $("#task2_continue").click(function() {
         $(".task2").hide();
         $(".conclusion").show();
+        $(".content").scrollTop(0);
       });
       $("#task2_submit").click(function() {
         var handlerUrl = runtime.handlerUrl(element, 'submit_task2');
