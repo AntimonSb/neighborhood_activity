@@ -143,7 +143,6 @@ class NeighborhoodDynamicsXBlock(XBlock):
         frag.add_javascript(self.resource_string("static/js/src/nvd3.js"))
         frag.add_javascript("var json_data ={}".format(self.json_data))
         frag.add_javascript(self.resource_string("static/js/src/multibar_charts.js"))
-#        frag.initialize_js('initMultibarChart')
         frag.add_javascript(self.resource_string("static/js/src/neighborhood_dynamics.js"))
         frag.initialize_js('NeighborhoodDynamicsXBlock')
         return frag
