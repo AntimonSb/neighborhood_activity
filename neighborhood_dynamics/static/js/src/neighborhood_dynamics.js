@@ -140,5 +140,9 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
           }
         });
       });
+      $("#continue_case").click(function() {
+        parent.postMessage(JSON.stringify({action:'continue'}),'*');
+      });
+
     });
 }
