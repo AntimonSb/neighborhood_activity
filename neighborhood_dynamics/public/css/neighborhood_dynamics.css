@@ -249,6 +249,10 @@
   vertical-align: bottom;
 }
 
+.task2 .navigation{
+  float: right;
+}
+
 .control.globe {
   position: absolute;
   left: 10px;
