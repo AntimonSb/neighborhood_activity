@@ -10,14 +10,20 @@
 }
 
 .neighborhood_dynamics_block .content {
-  position: fixed;
-  top: 10%;
+  position: relative;
+  display: block;
   left: 10%;
-  padding: 0;
-  height: 85%;
-  width: 80%;
   overflow: auto;
   font-weight: 100;
+  max-height: 80%;
+  padding: 0;
+}
+
+.neighborhood_dynamics_block .section-container {
+  position:fixed ;
+  height:100%;
+  width:100%;
+  top: 7%;
 }
 
 .neighborhood_dynamics_block img {
@@ -90,7 +96,6 @@
   margin: 0;
   height: 100%;
   width: 100%;
-/*        display: none;*/
 }
 
 .neighborhood_dynamics_block .header-text {
@@ -245,12 +250,10 @@
 }
 
 .neighborhood_dynamics_block .navigation{
-  text-align: right;
+  left: 60%;
   vertical-align: bottom;
-}
-
-.task2 .navigation{
-  float: right;
+  display: inline-block;
+  position: relative;
 }
 
 .control.globe {

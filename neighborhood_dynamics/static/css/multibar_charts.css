@@ -12,7 +12,7 @@
 }
 
 .multibar-content {
-    padding: 2% 0;
+    padding: 1% 0;
     margin: auto;
 }
 
@@ -21,7 +21,7 @@
 }
 
 svg {
-    min-height: 70vh;
+    min-height: 55vh;
     min-width: 70vh;
     color: white;
 }
