@@ -162,6 +162,7 @@
   cursor: pointer;
   display: inline;
   position: relative;
+  overflow-x: visible !important;
 }
 
 .neighborhood_dynamics_block .hint-link:hover:after{
@@ -169,7 +170,7 @@
   bottom: 40px;
   color: white;
   content: attr(data-nesto);
-  left: -240px;
+  left: -440px;
   padding: 50px;
   position: absolute;
   z-index: 98;
