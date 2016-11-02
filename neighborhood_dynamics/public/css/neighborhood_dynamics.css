@@ -9,6 +9,13 @@
   background-size: cover;
 }
 
+.neighborhood_dynamics_block .section{
+  position: fixed;
+  top: 10%;
+  height: 100%;
+  width: 100%;
+}
+
 .neighborhood_dynamics_block .content {
   position: relative;
   display: block;
@@ -137,7 +144,7 @@
 }
 
 .neighborhood_dynamics_block .view-on-map{
-  font-size: 24px;
+  font-size: 20px !important;
   font-family: "Roboto Condensed" !important;
   font-weight: lighter;
   text-transform: uppercase;
@@ -238,7 +245,7 @@
 }
 
 .neighborhood_dynamics_block .question{
-  padding-top: 24px;
+  padding-top: 18px;
 }
 
 .neighborhood_dynamics_block .answers{
@@ -250,7 +257,8 @@
 }
 
 .neighborhood_dynamics_block .navigation{
-  left: 60%;
+  float: right;
+  right: 14%;
   vertical-align: bottom;
   display: inline-block;
   position: relative;
