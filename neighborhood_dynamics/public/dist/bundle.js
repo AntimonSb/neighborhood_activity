@@ -174,11 +174,10 @@ global.initMultibarChart = function (runtime, element, data) {
                 var yRange = utils.getRangeForY(chart_specifics.max_y_range),
                     numberOfYticks = chart_specifics.numberOfYticks,
                     tickFormat = d3.format(chart_specifics.format_type.replace(/'/g, ""));
-                
+
                 var _dimensions = utils.getDimensions($main_container, inStudio);
                 var width = _dimensions.width,
                     height = _dimensions.height;
-                console.log(_dimensions);
                 var chart = nv.models.multiBarChart()
                     .width(width)
                     .height(height)
@@ -238,13 +237,13 @@ global.initMultibarChart = function (runtime, element, data) {
                     .attr("text-anchor", "middle")
                     .classed("legend-title", true)
                     .text(chart_specifics.legend_text);
-                
+
 
                 // prevent double click on legend
                 utils.preventDblClickLegend(chart);
 
                 updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
-              
+
                 // Clicking on legend reverts some custom overrides.
                 d3graph_container.select('.nv-legend').on("click", function () {
                     updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
@@ -276,6 +275,7 @@ global.initMultibarChart = function (runtime, element, data) {
         });
     }
 }
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./setters.js":2,"./utils.js":3}],2:[function(require,module,exports){
 'use strict';
@@ -328,6 +328,7 @@ module.exports = {
     setFileSpecs: setFileSpecs,
     setChartsSpecs: setChartsSpecs
 };
+
 },{}],3:[function(require,module,exports){
 'use strict';
 
@@ -546,4 +547,5 @@ module.exports = {
     updateLegendPosition: updateLegendPosition,
     updateFootnotePosition: updateFootnotePosition
 };
+
 },{}]},{},[1]);
