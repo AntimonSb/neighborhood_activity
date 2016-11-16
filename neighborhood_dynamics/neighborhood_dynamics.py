@@ -23,7 +23,7 @@ class NeighborhoodDynamicsXBlock(XBlock):
     """
     TO-DO: document what your XBlock does.
     """
-    json_data = String(help="JSON data from excel file", default="None", scope=Scope.content)
+    json_data = String(help="JSON data from excel file", default=None, scope=Scope.content)
     
     display_name = String(display_name="Display Name",
                           default="Neighborhood Dynamics",
@@ -141,10 +141,11 @@ class NeighborhoodDynamicsXBlock(XBlock):
         frag.add_css(self.resource_string("static/css/nvd3.css"))
         frag.add_javascript(self.resource_string("static/js/src/d3.v3.js"))
         frag.add_javascript(self.resource_string("static/js/src/nvd3.js"))
-        frag.add_javascript("var json_data ={}".format(self.json_data))
-        frag.add_javascript(self.resource_string("static/js/src/multibar_charts.js"))
+        frag.add_javascript_url(self.runtime.local_resource_url(self, 'public/dist/bundle.js'))
         frag.add_javascript(self.resource_string("static/js/src/neighborhood_dynamics.js"))
-        frag.initialize_js('NeighborhoodDynamicsXBlock')
+        frag.initialize_js('NeighborhoodDynamicsXBlock', {
+          'json_data': self.json_data
+        })
         return frag
 
       
@@ -233,28 +234,39 @@ class NeighborhoodDynamicsXBlock(XBlock):
             # get workbook
             workbook = load_workbook(filename=upload.file, read_only=True)
             sheets = []
+            # TODO: refactor!
+            # this json will turn out looking bad. But refactoring will cause big changes on fronted
+            # No time for this at the moment
+
             for worksheet in workbook:
                 sheet = {
-                        "name": worksheet.title,
-                        "rows": []
-                    }
-                for row in worksheet.iter_rows():
-                    sheet_row = {
-                        "key": None,
-                        "values": []
-                    }
-                    cell_num = 0
-                    # first row will be key for iteration, ex. "Country name"
-                    for cell in row:
-                        if cell_num is 0:
-                            sheet_row["key"] = cell.value
-                        else:
-                            sheet_row["values"].append(cell.value)
-                        cell_num += 1
-                    sheet['rows'].append(sheet_row)
-
-                sheets.append(sheet)
-
+                    "name": worksheet.title,
+                    "rows": []
+                }
+                if not ((worksheet.title == 'specs') or (worksheet.title == 'charts')):
+                    for row in worksheet.iter_rows():
+                        sheet_row = {
+                            "key": None,
+                            "values": []
+                        }
+                        cell_num = 0
+                        # first row will be key for iteration, ex. "Country name"
+                        for cell in row:
+                            if cell_num is 0:
+                                sheet_row["key"] = cell.value
+                            else:
+                                sheet_row["values"].append(cell.value)
+                            cell_num += 1
+                        sheet['rows'].append(sheet_row)
+                    sheets.append(sheet)
+                else:
+                    # we will format differently sheets with specs
+                    for row in worksheet.iter_rows():
+                        _row = []
+                        for cell in row:
+                            _row.append(cell.value)
+                        sheet['rows'].append(_row)
+                    sheets.append(sheet)
             self.json_data = json.dumps(sheets)
 
         return Response(json_body={

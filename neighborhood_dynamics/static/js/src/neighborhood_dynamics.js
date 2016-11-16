@@ -1,5 +1,5 @@
 /* Javascript for NeighborhoodDynamicsXBlock. */
-function NeighborhoodDynamicsXBlock(runtime, element) {
+function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
 
     $(function ($) {
       
@@ -19,7 +19,6 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
         }
         if(data.san_felipe && data.santa_ana && data.el_chorillo){
           $("#task1_continue").removeAttr("disabled");
-          initMultibarChart();
           $(el).attr("disabled", true);
         } else {
           $(el).text("Try Again");
@@ -75,6 +74,9 @@ function NeighborhoodDynamicsXBlock(runtime, element) {
         $(".task1").hide();
         $(".charts").show();
         $(".content").scrollTop(0);
+        if (!$(".navigation-title").val()){
+          initMultibarChart(runtime, element, data_from_py);
+        }
       });
       $("#task1_submit").click(function() {
         var handlerUrl = runtime.handlerUrl(element, 'submit_task1');

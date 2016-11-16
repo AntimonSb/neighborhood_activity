@@ -260,12 +260,16 @@
   margin-top: 20px;
 }
 
-.neighborhood_dynamics_block .navigation{
+.neighborhood_dynamics_block .page-navigation{
   float: right;
   right: 10%;
   vertical-align: bottom;
   display: inline-block;
   position: relative;
+}
+.charts.section .page-navigation{
+  position: fixed;
+  top: 85%;
 }
 
 .neighborhood_dynamics_block .submit{
