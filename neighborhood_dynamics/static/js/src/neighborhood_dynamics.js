@@ -74,7 +74,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
         $(".task1").hide();
         $(".charts").show();
         $(".content").scrollTop(0);
-        if (!$(".navigation-title").val()){
+        if (!$(".navigation-title").text()){
           initMultibarChart(runtime, element, data_from_py);
         }
       });

@@ -176,7 +176,6 @@ global.initMultibarChart = function (runtime, element, data) {
                 var _dimensions = utils.getDimensions($main_container, inStudio);
                 var width = _dimensions.width,
                     height = _dimensions.height;
-                console.log(_dimensions);
                 var chart = nv.models.multiBarChart()
                     .width(width)
                     .height(height)
