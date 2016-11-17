@@ -11,108 +11,109 @@ from functools import partial
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String, Float
 from xblock.fragment import Fragment
-from django.template import Context,Template
+from django.template import Context, Template
 
 from openpyxl import load_workbook
 from webob.response import Response
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
 
+from xblock_django.mixins import FileUploadMixin
 
-class NeighborhoodDynamicsXBlock(XBlock):
+
+class NeighborhoodDynamicsXBlock(XBlock, FileUploadMixin):
     """
     TO-DO: document what your XBlock does.
     """
     json_data = String(help="JSON data from excel file", default=None, scope=Scope.content)
-    
+
     display_name = String(display_name="Display Name",
                           default="Neighborhood Dynamics",
                           scope=Scope.settings,
                           help="Name of Xblock.")
-    
+
     san_felipe_lower = Float(display_name="San Felipe Lower Bound",
                              default=1.0,
                              scope=Scope.settings,
                              help="Lower bound")
-    
+
     san_felipe_upper = Float(display_name="San Felipe Upper Bound",
                              default=1.0,
                              scope=Scope.settings,
                              help="Upper bound")
-    
+
     santa_ana_lower = Float(display_name="Santa Ana Lower Bound",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Lower bound")
-    
+                            default=1.0,
+                            scope=Scope.settings,
+                            help="Lower bound")
+
     santa_ana_upper = Float(display_name="Santa Ana Upper Bound",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Upper bound")
-    
+                            default=1.0,
+                            scope=Scope.settings,
+                            help="Upper bound")
+
     el_chorillo_lower = Float(display_name="El Chorillo Lower Bound",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Lower bound")
-    
+                              default=1.0,
+                              scope=Scope.settings,
+                              help="Lower bound")
+
     el_chorillo_upper = Float(display_name="El Chorillo Upper Bound",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Upper bound")
-    
+                              default=1.0,
+                              scope=Scope.settings,
+                              help="Upper bound")
+
     san_felipe_1 = Float(display_name="San Felipe 1990 to 2000",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                         default=1.0,
+                         scope=Scope.settings,
+                         help="Percentage change")
+
     san_felipe_2 = Float(display_name="San Felipe 2000 to 2010",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                         default=1.0,
+                         scope=Scope.settings,
+                         help="Percentage change")
+
     san_felipe_3 = Float(display_name="San Felipe 1990 to 2010",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                         default=1.0,
+                         scope=Scope.settings,
+                         help="Percentage change")
+
     santa_ana_1 = Float(display_name="Santa Ana 1990 to 2000",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                        default=1.0,
+                        scope=Scope.settings,
+                        help="Percentage change")
+
     santa_ana_2 = Float(display_name="Santa Ana 2000 to 2010",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                        default=1.0,
+                        scope=Scope.settings,
+                        help="Percentage change")
+
     santa_ana_3 = Float(display_name="Santa Ana 1990 to 2010",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                        default=1.0,
+                        scope=Scope.settings,
+                        help="Percentage change")
+
     el_chorillo_1 = Float(display_name="El Chorillo 1990 to 2000",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                          default=1.0,
+                          scope=Scope.settings,
+                          help="Percentage change")
+
     el_chorillo_2 = Float(display_name="El Chorillo 2000 to 2010",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                          default=1.0,
+                          scope=Scope.settings,
+                          help="Percentage change")
+
     el_chorillo_3 = Float(display_name="El Chorillo 1990 to 2010",
-                             default=1.0,
-                             scope=Scope.settings,
-                             help="Percentage change")
-    
+                          default=1.0,
+                          scope=Scope.settings,
+                          help="Percentage change")
+
     task1_tries = Integer(
         default=0, scope=Scope.user_state,
-        help="Counter of user tries",)
-    
+        help="Counter of user tries", )
+
     task2_tries = Integer(
         default=0, scope=Scope.user_state,
-        help="Counter of user tries",)
-
+        help="Counter of user tries", )
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -125,14 +126,14 @@ class NeighborhoodDynamicsXBlock(XBlock):
         The primary view of the NeighborhoodDynamicsXBlock, shown to students
         when viewing courses.
         """
-        
+
         template_str = self.resource_string("static/html/neighborhood_dynamics.html")
         template = Template(template_str)
-        
-        #parameters sent to browser for XBlock html page
+
+        # parameters sent to browser for XBlock html page
         html = template.render(Context({
         }))
-        
+
         frag = Fragment(html)
         frag.add_css_url(
             self.runtime.local_resource_url(
@@ -144,38 +145,37 @@ class NeighborhoodDynamicsXBlock(XBlock):
         frag.add_javascript_url(self.runtime.local_resource_url(self, 'public/dist/bundle.js'))
         frag.add_javascript(self.resource_string("static/js/src/neighborhood_dynamics.js"))
         frag.initialize_js('NeighborhoodDynamicsXBlock', {
-          'json_data': self.json_data
+            'json_data': self.json_data
         })
         return frag
 
-      
     def studio_view(self, context=None):
         """
         Create a fragment used to display the edit view in the Studio.
         """
-        
+
         template_str = self.resource_string("static/html/studio_view.html")
         template = Template(template_str)
         html = template.render(Context({
-              'display_name': self.display_name,
-              'display_description': self.display_description,
-              'san_felipe_lower': self.san_felipe_lower,
-              'san_felipe_upper': self.san_felipe_upper,
-              'santa_ana_lower': self.santa_ana_lower,
-              'santa_ana_upper': self.santa_ana_upper,
-              'el_chorillo_lower': self.el_chorillo_lower,
-              'el_chorillo_upper': self.el_chorillo_upper,
-              'san_felipe_1': self.san_felipe_1,
-              'san_felipe_2': self.san_felipe_2,
-              'san_felipe_3': self.san_felipe_3,
-              'santa_ana_1': self.santa_ana_1,
-              'santa_ana_2': self.santa_ana_2,
-              'santa_ana_3': self.santa_ana_3,
-              'el_chorillo_1': self.el_chorillo_1,
-              'el_chorillo_2': self.el_chorillo_2,
-              'el_chorillo_3': self.el_chorillo_3
-            }))
-        
+            'display_name': self.display_name,
+            'display_description': self.display_description,
+            'san_felipe_lower': self.san_felipe_lower,
+            'san_felipe_upper': self.san_felipe_upper,
+            'santa_ana_lower': self.santa_ana_lower,
+            'santa_ana_upper': self.santa_ana_upper,
+            'el_chorillo_lower': self.el_chorillo_lower,
+            'el_chorillo_upper': self.el_chorillo_upper,
+            'san_felipe_1': self.san_felipe_1,
+            'san_felipe_2': self.san_felipe_2,
+            'san_felipe_3': self.san_felipe_3,
+            'santa_ana_1': self.santa_ana_1,
+            'santa_ana_2': self.santa_ana_2,
+            'santa_ana_3': self.santa_ana_3,
+            'el_chorillo_1': self.el_chorillo_1,
+            'el_chorillo_2': self.el_chorillo_2,
+            'el_chorillo_3': self.el_chorillo_3
+        }))
+
         frag = Fragment(html.format(self=self))
         js_str = pkg_resources.resource_string(__name__, "static/js/src/studio_edit.js")
         frag.add_javascript(unicode(js_str))
@@ -206,27 +206,10 @@ class NeighborhoodDynamicsXBlock(XBlock):
         self.el_chorillo_2 = data['el_chorillo_2']
         self.el_chorillo_3 = data['el_chorillo_3']
 
+        block_id = data['usage_id']
         if not isinstance(data['thumbnail'], basestring):
             upload = data['thumbnail']
-
-            filename = self._file_storage_name(upload.file.name)
-            content_location = StaticContent.compute_location(self.location.course_key, filename)
-
-            chunked = upload.file.multiple_chunks()
-            sc_partial = partial(StaticContent, content_location, filename, upload.file.content_type)
-            if chunked:
-                content = sc_partial(upload.file.chunks())
-                tempfile_path = upload.file.temporary_file_path()
-            else:
-                content = sc_partial(upload.file.read())
-                tempfile_path = None
-
-            contentstore().save(content)
-
-            # readback the saved content - we need the database timestamp
-            readback = contentstore().find(content.location)
-            locked = getattr(content, 'locked', False)
-            self.background_url = StaticContent.serialize_asset_key_with_slash(content.location)
+            self.thumbnail_url = self.upload_to_s3('THUMBNAIL', upload.file, block_id, self.thumbnail_url)
 
         if not isinstance(data['excel'], basestring):
             upload = data['excel']
@@ -272,53 +255,68 @@ class NeighborhoodDynamicsXBlock(XBlock):
         return Response(json_body={
             'result': "success"
         })
-      
+
     @XBlock.json_handler
     def submit_task1(self, data, suffix=''):
         self.task1_tries = self.task1_tries + 1;
-        san_felipe = data['san_felipe_lower'] and data['san_felipe_upper'] and (self.san_felipe_lower == float(data['san_felipe_lower'])) and (self.san_felipe_upper == float(data['san_felipe_upper']))
-        santa_ana = data['santa_ana_lower'] and data['santa_ana_upper'] and (self.santa_ana_lower == float(data['santa_ana_lower'])) and (self.santa_ana_upper == float(data['santa_ana_upper']))
-        el_chorillo = data['el_chorillo_lower'] and data['el_chorillo_upper'] and (self.el_chorillo_lower == float(data['el_chorillo_lower'])) and (self.el_chorillo_upper == float(data['el_chorillo_upper']))
-        
+        san_felipe = data['san_felipe_lower'] and data['san_felipe_upper'] and (
+        self.san_felipe_lower == float(data['san_felipe_lower'])) and (
+                     self.san_felipe_upper == float(data['san_felipe_upper']))
+        santa_ana = data['santa_ana_lower'] and data['santa_ana_upper'] and (
+        self.santa_ana_lower == float(data['santa_ana_lower'])) and (
+                    self.santa_ana_upper == float(data['santa_ana_upper']))
+        el_chorillo = data['el_chorillo_lower'] and data['el_chorillo_upper'] and (
+        self.el_chorillo_lower == float(data['el_chorillo_lower'])) and (
+                      self.el_chorillo_upper == float(data['el_chorillo_upper']))
+
         return {
-            'result': 'success', 
-            'data': { 
-                'san_felipe': san_felipe, 
-                'santa_ana': santa_ana, 
+            'result': 'success',
+            'data': {
+                'san_felipe': san_felipe,
+                'santa_ana': santa_ana,
                 'el_chorillo': el_chorillo,
                 'tries': self.task1_tries
             }
         }
-      
+
     @XBlock.json_handler
     def submit_task2(self, data, suffix=''):
         self.task2_tries = self.task2_tries + 1;
-        san_felipe1 = data['san_felipe_1'] and data['san_felipe_1'] and (self.san_felipe_1 == float(data['san_felipe_1'])) and (self.san_felipe_1 == float(data['san_felipe_1']))
-        san_felipe2 = data['san_felipe_2'] and data['san_felipe_2'] and (self.san_felipe_2 == float(data['san_felipe_2'])) and (self.san_felipe_2 == float(data['san_felipe_2']))
-        san_felipe3 = data['san_felipe_3'] and data['san_felipe_3'] and (self.san_felipe_3 == float(data['san_felipe_3'])) and (self.san_felipe_3 == float(data['san_felipe_3']))
-        santa_ana1 = data['santa_ana_1'] and data['santa_ana_1'] and (self.santa_ana_1 == float(data['santa_ana_1'])) and (self.santa_ana_1 == float(data['santa_ana_1']))
-        santa_ana2 = data['santa_ana_2'] and data['santa_ana_2'] and (self.santa_ana_2 == float(data['santa_ana_2'])) and (self.santa_ana_2 == float(data['santa_ana_2']))
-        santa_ana3 = data['santa_ana_3'] and data['santa_ana_3'] and (self.santa_ana_3 == float(data['santa_ana_3'])) and (self.santa_ana_3 == float(data['santa_ana_3']))
-        el_chorillo1 = data['el_chorillo_1'] and data['el_chorillo_1'] and (self.el_chorillo_1 == float(data['el_chorillo_1'])) and (self.el_chorillo_1 == float(data['el_chorillo_1']))
-        el_chorillo2 = data['el_chorillo_2'] and data['el_chorillo_2'] and (self.el_chorillo_2 == float(data['el_chorillo_2'])) and (self.el_chorillo_2 == float(data['el_chorillo_2']))
-        el_chorillo3 = data['el_chorillo_3'] and data['el_chorillo_3'] and (self.el_chorillo_3 == float(data['el_chorillo_3'])) and (self.el_chorillo_3 == float(data['el_chorillo_3']))
-        
+        san_felipe1 = data['san_felipe_1'] and data['san_felipe_1'] and (
+        self.san_felipe_1 == float(data['san_felipe_1'])) and (self.san_felipe_1 == float(data['san_felipe_1']))
+        san_felipe2 = data['san_felipe_2'] and data['san_felipe_2'] and (
+        self.san_felipe_2 == float(data['san_felipe_2'])) and (self.san_felipe_2 == float(data['san_felipe_2']))
+        san_felipe3 = data['san_felipe_3'] and data['san_felipe_3'] and (
+        self.san_felipe_3 == float(data['san_felipe_3'])) and (self.san_felipe_3 == float(data['san_felipe_3']))
+        santa_ana1 = data['santa_ana_1'] and data['santa_ana_1'] and (
+        self.santa_ana_1 == float(data['santa_ana_1'])) and (self.santa_ana_1 == float(data['santa_ana_1']))
+        santa_ana2 = data['santa_ana_2'] and data['santa_ana_2'] and (
+        self.santa_ana_2 == float(data['santa_ana_2'])) and (self.santa_ana_2 == float(data['santa_ana_2']))
+        santa_ana3 = data['santa_ana_3'] and data['santa_ana_3'] and (
+        self.santa_ana_3 == float(data['santa_ana_3'])) and (self.santa_ana_3 == float(data['santa_ana_3']))
+        el_chorillo1 = data['el_chorillo_1'] and data['el_chorillo_1'] and (
+        self.el_chorillo_1 == float(data['el_chorillo_1'])) and (self.el_chorillo_1 == float(data['el_chorillo_1']))
+        el_chorillo2 = data['el_chorillo_2'] and data['el_chorillo_2'] and (
+        self.el_chorillo_2 == float(data['el_chorillo_2'])) and (self.el_chorillo_2 == float(data['el_chorillo_2']))
+        el_chorillo3 = data['el_chorillo_3'] and data['el_chorillo_3'] and (
+        self.el_chorillo_3 == float(data['el_chorillo_3'])) and (self.el_chorillo_3 == float(data['el_chorillo_3']))
+
         return {
             'result': 'success',
-            'data': { 
+            'data': {
                 'san_felipe1': san_felipe1,
-                'san_felipe2': san_felipe2, 
-                'san_felipe3': san_felipe3, 
-                'santa_ana1': santa_ana1, 
-                'santa_ana2': santa_ana2, 
-                'santa_ana3': santa_ana3, 
+                'san_felipe2': san_felipe2,
+                'san_felipe3': san_felipe3,
+                'santa_ana1': santa_ana1,
+                'santa_ana2': santa_ana2,
+                'santa_ana3': santa_ana3,
                 'el_chorillo1': el_chorillo1,
                 'el_chorillo2': el_chorillo2,
                 'el_chorillo3': el_chorillo3,
                 'tries': self.task2_tries
             }
-          }
-      
+        }
+
     def _file_storage_name(self, filename):
         # pylint: disable=no-member
         """
@@ -327,13 +325,12 @@ class NeighborhoodDynamicsXBlock(XBlock):
         path = (
             '{loc.block_type}/{loc.block_id}'
             '/{filename}'.format(
-                    loc=self.location,
-                    filename=filename
+                loc=self.location,
+                filename=filename
             )
         )
         return path
 
-    
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.
     @staticmethod
