@@ -4,6 +4,7 @@ var setters = require('./setters.js');
 global.initMultibarChart = function (runtime, element, data) {
     // edx bug fix
     element = Array.isArray(element) ? element[0] : element;
+    var isFirstLoad = true;
     var $element = $(element);
 
     var chart_sheet_names = [];
@@ -50,12 +51,9 @@ global.initMultibarChart = function (runtime, element, data) {
     var $main_container = $element.find('.multibar-chart-container');
 
     var inStudio = utils.isRenderedInStudio($main_container);
-    var _dimensions = utils.getDimensions($main_container, inStudio);
-    var width = _dimensions.width,
-        height = _dimensions.height;
 
     generate_tabs(_charts, $element);
-    var d3graph_container = d3.select($element[0]).select('svg');
+    var d3graph_container = d3.select($element[0]).select('.multibar-chart svg');
 
     function generateChartsSpecs() {
         var title = $main_container.find('#chart-title');
@@ -119,6 +117,7 @@ global.initMultibarChart = function (runtime, element, data) {
         // clear data before new render
         datum = [];
         d3.select($element[0]).selectAll('svg > *').remove();
+
         chart_specifics.max_y_range = 0;
         for (var i = 1; i < sheet.rows.length; i++) {
             var row = sheet.rows[i];
@@ -154,12 +153,12 @@ global.initMultibarChart = function (runtime, element, data) {
 
     function updatePositions(nv_width, nv_height, code, d3graph_container) {
         utils.updateFootnotePosition(nv_width, nv_height, d3graph_container);
-        utils.updateXYtitlesPosition(nv_width, nv_height, code, d3graph_container);
         utils.updateLegendPosition(nv_width, code, d3graph_container);
         utils.updateWrap('.tick', d3graph_container);
+        utils.updateXYtitlesPosition(nv_width, nv_height, code, d3graph_container);
         if (inStudio) {
             // in studio move whole chart a bit left (default: translate(250,45))
-            d3graph_container.select('.nvd3.nv-wrap.nv-multiBarWithLegend').attr('transform', 'translate(100,45)');
+            d3graph_container.select('.nvd3.nv-wrap.nv-multiBarWithLegend').attr('transform', 'translate(120,45)');
         }
     }
 
@@ -176,6 +175,7 @@ global.initMultibarChart = function (runtime, element, data) {
                 var _dimensions = utils.getDimensions($main_container, inStudio);
                 var width = _dimensions.width,
                     height = _dimensions.height;
+
                 var chart = nv.models.multiBarChart()
                     .width(width)
                     .height(height)
@@ -230,46 +230,49 @@ global.initMultibarChart = function (runtime, element, data) {
                 // add legend-title
                 d3graph_container.select('.nv-legend')
                     .append("text")
-                    .attr("x", -45)
+                    .attr("x", 5)
                     .attr("y", -15)
                     .attr("text-anchor", "middle")
                     .classed("legend-title", true)
                     .text(chart_specifics.legend_text);
 
-
                 // prevent double click on legend
                 utils.preventDblClickLegend(chart);
-
                 updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
 
                 // Clicking on legend reverts some custom overrides.
                 d3graph_container.select('.nv-legend').on("click", function () {
                     updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
                 });
-
                 return chart;
             },
             callback: function (graph) {
                 nv.utils.windowResize(function () {
-                    _dimensions = utils.getDimensions($main_container, inStudio);
-                    width = _dimensions.width;
-                    height = _dimensions.height;
+                    // bug fix: in app we trigger windowResize on every imported xblock. This
+                    // doesn't suit us for multibar so we'll go around it.
+                    if(!isFirstLoad) {
+                        var _dimensions = utils.getDimensions($main_container, inStudio);
+                        var width = _dimensions.width,
+                            height = _dimensions.height;
 
-                    graph.width(width).height(height);
+                        graph.width(width).height(height);
 
-                    d3.select($element[0]).select('svg')
-                        .attr('width', width)
-                        .attr('height', height)
-                        .transition().duration(0)
-                        .call(graph)
-                    ;
+                        d3.select($element[0]).select('svg')
+                            .attr('width', width)
+                            .attr('height', height)
+                            .transition().duration(0)
+                            .call(graph)
+                        ;
 
-                    var nv_y_axis = $main_container.find('.nv-y.nv-axis.nvd3-svg'),
-                        nv_height = nv_y_axis.get(0).getBBox().height,
-                        nv_width = nv_y_axis.get(0).getBBox().width;
-                    updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
+                        var nv_y_axis = $main_container.find('.nv-y.nv-axis.nvd3-svg'),
+                            _nv_height = nv_y_axis.get(0).getBBox().height,
+                            _nv_width = nv_y_axis.get(0).getBBox().width;
+                        updatePositions(_nv_width, _nv_height, general_charts_data.code, d3graph_container);
+                    } else {
+                        isFirstLoad = false;
+                    }
                 });
             }
         });
     }
-}
+};
