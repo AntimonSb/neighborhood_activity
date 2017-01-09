@@ -148,13 +148,14 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
 
     });
 
-    var continue_buttons = document.getElementsByClassName('update-progress');
-    var progress_bar = document.getElementById('progress-bar');
-    for (var i = 0; i < continue_buttons.length; i++) {
-      continue_buttons[i].addEventListener('click', function () {
-        var width = Number(progress_bar.style.width.replace('%', ''));
-        width += 20;
-        progress_bar.style.width = width + '%';
-      });
-    }
+    (function updateProgress() {
+      var continue_buttons = document.getElementsByClassName('update-progress');
+      var progress_bar = document.getElementById('progress-bar');
+      for (var i = 0; i < continue_buttons.length; i++) {
+        continue_buttons[i].addEventListener('click', function () {
+          var progress_indicator = document.querySelector('.progress-indicator:not(.highlighted)');
+          progress_indicator.classList.add('highlighted');
+        });
+      }
+    })();
 }
