@@ -11,7 +11,7 @@
           </h1>
         </div>
         <div class="begin-container">
-          <button id="begin">Begin</button>
+          <button id="begin" class="forward-progress">Begin</button>
         </div>
       </section>
 
@@ -55,8 +55,8 @@
           <button id="task1_submit" class="button submit">Submit</button>
         </div>
         <div class="page-navigation">
-          <button id="task1_back" class="button">Back</button>
-          <button id="task1_continue" class="button" disabled="true">Continue</button>
+          <button id="task1_back" class="button backward-progress">Back</button>
+          <button id="task1_continue" class="button forward-progress" disabled="true">Continue</button>
         </div>
       </section>
       <section class="charts section" style="display:none;">
@@ -76,8 +76,8 @@
           </div>
         </div>
         <div class="page-navigation">
-          <button id="charts_back" class="button">Back</button>
-          <button id="charts_continue" class="button">Continue</button>
+          <button id="charts_back" class="button backward-progress">Back</button>
+          <button id="charts_continue" class="button forward-progress">Continue</button>
         </div>         
       </section>
       <section class="task2 section" style="display:none;">
@@ -140,8 +140,8 @@
           <button id="task2_submit" class="button submit">Submit</button>
         </div>
         <div class="page-navigation">
-          <button id="task2_back" class="button">Back</button>
-          <button id="task2_continue" class="button" disabled="true">Continue</button>
+          <button id="task2_back" class="button backward-progress">Back</button>
+          <button id="task2_continue" class="button forward-progress" disabled="true">Continue</button>
         </div>           
       </section>
       <section class="conclusion section" style="display:none;">
@@ -163,9 +163,18 @@
           </p>
         </div>
         <div class="page-navigation">
-          <button id="continue_case" class="button">Continue Case</button>
+          <button id="continue_case" class="button forward-progress">Continue Case</button>
         </div>  
       </section>
+      <div class="progress-wrapper">
+        <ul id="activity-progress">
+          <li class="progress-indicator highlighted">&nbsp;</li>
+          <li class="progress-indicator">&nbsp;</li>
+          <li class="progress-indicator">&nbsp;</li>
+          <li class="progress-indicator">&nbsp;</li>
+          <li class="progress-indicator">&nbsp;</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
