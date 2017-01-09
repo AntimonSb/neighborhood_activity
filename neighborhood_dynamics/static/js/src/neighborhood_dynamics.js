@@ -149,13 +149,22 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
 
     (function initUpdateProgressEvents() {
       var $document = $(document);
-      var continue_buttons = $document.find('.update-progress');
       var progress_bar = $document.find('#progress-bar');
+      var continue_buttons = $document.find('.forward-progress');
 
       for (var i = 0; i < continue_buttons.length; i++) {
         $(continue_buttons[i]).on('click', function () {
           var progress_indicator_to_highlight = $document.find('.progress-indicator').not('.highlighted').first();
           progress_indicator_to_highlight.addClass('highlighted');
+        });
+      }
+
+      var back_buttons = $document.find('.backward-progress');
+
+      for (var i = 0; i < back_buttons.length; i++) {
+        $(back_buttons[i]).on('click', function() {
+          var progress_indicator_to_unhighlight = $document.find('.progress-indicator.highlighted').last();
+          progress_indicator_to_unhighlight.removeClass('highlighted');
         });
       }
     })();
