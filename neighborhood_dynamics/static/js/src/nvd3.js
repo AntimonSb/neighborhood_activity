@@ -8496,23 +8496,6 @@ nv.models.multiBarChart = function() {
                     margin.top = legend.height();
                     availableHeight = nv.utils.availableHeight(height, container, margin);
                 }
-
-                /**
-                 * MIT override for positioning legend
-                 */
-
-                //g.select('.nv-legendWrap')
-                //    .attr('transform', 'translate(-' + (availableWidth / 5) + ', -7)')
-                //    .selectAll('.nv-series').each(function (d, i) {
-                //    // stack them in column instead row
-                //    var el = d3.select(this);
-                //    el.attr('class', 'nv-series')
-                //        .attr('transform', 'translate(' + 0 + ',' + i * 25 + ')');
-                //});
-
-                /**
-                 * end MIT override
-                 */
             }
 
             // Controls

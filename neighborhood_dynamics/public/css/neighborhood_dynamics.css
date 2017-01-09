@@ -27,6 +27,12 @@
   width: 88%;
 }
 
+.neighborhood_dynamics_block .content a {
+    text-decoration: underline;
+    font-style: italic;
+    color: white;
+}
+
 .neighborhood_dynamics_block .section-container {
   position:fixed ;
   height:100%;
@@ -283,11 +289,11 @@
   left: 10px;
   text-transform: uppercase;
   font-size: 18px;
+}
 
-  .icon-user {
+.control.globe .icon-user {
     margin-right: 5px;
     font-size: 24px;
-  }
 }
 
 .neighborhood_dynamics_block .item {

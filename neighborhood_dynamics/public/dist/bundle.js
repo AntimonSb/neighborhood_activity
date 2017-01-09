@@ -6,6 +6,7 @@ var setters = require('./setters.js');
 global.initMultibarChart = function (runtime, element, data) {
     // edx bug fix
     element = Array.isArray(element) ? element[0] : element;
+    var isFirstLoad = true;
     var $element = $(element);
 
     var chart_sheet_names = [];
@@ -52,12 +53,9 @@ global.initMultibarChart = function (runtime, element, data) {
     var $main_container = $element.find('.multibar-chart-container');
 
     var inStudio = utils.isRenderedInStudio($main_container);
-    var _dimensions = utils.getDimensions($main_container, inStudio);
-    var width = _dimensions.width,
-        height = _dimensions.height;
 
     generate_tabs(_charts, $element);
-    var d3graph_container = d3.select($element[0]).select('svg');
+    var d3graph_container = d3.select($element[0]).select('.multibar-chart svg');
 
     function generateChartsSpecs() {
         var title = $main_container.find('#chart-title');
@@ -121,6 +119,7 @@ global.initMultibarChart = function (runtime, element, data) {
         // clear data before new render
         datum = [];
         d3.select($element[0]).selectAll('svg > *').remove();
+
         chart_specifics.max_y_range = 0;
         for (var i = 1; i < sheet.rows.length; i++) {
             var row = sheet.rows[i];
@@ -156,12 +155,12 @@ global.initMultibarChart = function (runtime, element, data) {
 
     function updatePositions(nv_width, nv_height, code, d3graph_container) {
         utils.updateFootnotePosition(nv_width, nv_height, d3graph_container);
-        utils.updateXYtitlesPosition(nv_width, nv_height, code, d3graph_container);
         utils.updateLegendPosition(nv_width, code, d3graph_container);
         utils.updateWrap('.tick', d3graph_container);
+        utils.updateXYtitlesPosition(nv_width, nv_height, code, d3graph_container);
         if (inStudio) {
             // in studio move whole chart a bit left (default: translate(250,45))
-            d3graph_container.select('.nvd3.nv-wrap.nv-multiBarWithLegend').attr('transform', 'translate(100,45)');
+            d3graph_container.select('.nvd3.nv-wrap.nv-multiBarWithLegend').attr('transform', 'translate(120,45)');
         }
     }
 
@@ -178,6 +177,7 @@ global.initMultibarChart = function (runtime, element, data) {
                 var _dimensions = utils.getDimensions($main_container, inStudio);
                 var width = _dimensions.width,
                     height = _dimensions.height;
+
                 var chart = nv.models.multiBarChart()
                     .width(width)
                     .height(height)
@@ -232,49 +232,52 @@ global.initMultibarChart = function (runtime, element, data) {
                 // add legend-title
                 d3graph_container.select('.nv-legend')
                     .append("text")
-                    .attr("x", -45)
+                    .attr("x", 5)
                     .attr("y", -15)
                     .attr("text-anchor", "middle")
                     .classed("legend-title", true)
                     .text(chart_specifics.legend_text);
 
-
                 // prevent double click on legend
                 utils.preventDblClickLegend(chart);
-
                 updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
 
                 // Clicking on legend reverts some custom overrides.
                 d3graph_container.select('.nv-legend').on("click", function () {
                     updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
                 });
-
                 return chart;
             },
             callback: function (graph) {
                 nv.utils.windowResize(function () {
-                    _dimensions = utils.getDimensions($main_container, inStudio);
-                    width = _dimensions.width;
-                    height = _dimensions.height;
+                    // bug fix: in app we trigger windowResize on every imported xblock. This
+                    // doesn't suit us for multibar so we'll go around it.
+                    if(!isFirstLoad) {
+                        var _dimensions = utils.getDimensions($main_container, inStudio);
+                        var width = _dimensions.width,
+                            height = _dimensions.height;
 
-                    graph.width(width).height(height);
+                        graph.width(width).height(height);
 
-                    d3.select($element[0]).select('svg')
-                        .attr('width', width)
-                        .attr('height', height)
-                        .transition().duration(0)
-                        .call(graph)
-                    ;
+                        d3.select($element[0]).select('svg')
+                            .attr('width', width)
+                            .attr('height', height)
+                            .transition().duration(0)
+                            .call(graph)
+                        ;
 
-                    var nv_y_axis = $main_container.find('.nv-y.nv-axis.nvd3-svg'),
-                        nv_height = nv_y_axis.get(0).getBBox().height,
-                        nv_width = nv_y_axis.get(0).getBBox().width;
-                    updatePositions(nv_width, nv_height, general_charts_data.code, d3graph_container);
+                        var nv_y_axis = $main_container.find('.nv-y.nv-axis.nvd3-svg'),
+                            _nv_height = nv_y_axis.get(0).getBBox().height,
+                            _nv_width = nv_y_axis.get(0).getBBox().width;
+                        updatePositions(_nv_width, _nv_height, general_charts_data.code, d3graph_container);
+                    } else {
+                        isFirstLoad = false;
+                    }
                 });
             }
         });
     }
-}
+};
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./setters.js":2,"./utils.js":3}],2:[function(require,module,exports){
@@ -312,7 +315,7 @@ function setChartsSpecs(charts_specs_data, sheet_name, chart_specifics) {
     var _length = _keys.length;
 
     // Other arrays are values
-    for (var i = 1; i < _length - 1; i++) {
+    for (var i = 1; i < _length; i++) {
         var _values = charts_specs_data['rows'][i];
         for (var j = 0; j < _values.length; j++) {
             chart_specifics['' + _keys[j] + ''] = _values[j];
@@ -332,7 +335,7 @@ module.exports = {
 },{}],3:[function(require,module,exports){
 'use strict';
 
-function isRenderedInStudio($main_container){
+function isRenderedInStudio($main_container) {
     var studio_wrapper = $main_container.parents('.studio-xblock-wrapper');
     return studio_wrapper[0] ? true : false;
 }
@@ -345,8 +348,9 @@ function isRenderedInStudio($main_container){
  */
 function getDimensions($main_container, inStudio) {
     var chart = $main_container.find('.multibar-content')[0];
-    var width = chart.offsetWidth * 0.60,
-        height = width / 2.18;
+    const ratio = 2.8;
+    var width = chart.offsetWidth * 0.75,
+        height = width / ratio;
 
     // in this case, the chart is rendering in studio, so we'll take
     // first known container's width as a reference.
@@ -360,6 +364,14 @@ function getDimensions($main_container, inStudio) {
         width: width
     }
 }
+
+function getResolution() {
+    // TODO: if this starts to expand, use switch instead of if condition
+    if (window.matchMedia('(max-width: 1399px)').matches) {
+        return 1399;
+    }
+}
+
 
 function digits(str) {
     var num = parseInt(str, 10);
@@ -452,7 +464,7 @@ function wrap(text, width) {
  */
 function updateWrap(className, d3graph_container) {
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, 50], .1, .3);
+        .rangeRoundBands([0, 40], .1, .25);
 
     d3graph_container.selectAll(className + ' text')
         .call(wrap, x.rangeBand());
@@ -463,12 +475,13 @@ function updateWrap(className, d3graph_container) {
  */
 
 function updateXYtitlesPosition(width, height, file_name, d3graph_container) {
+    var delta = getResolution() < 1400 ? 5 : 0;
     d3graph_container.select('.x-title')
-        .attr('transform', 'translate(' + ((width / 2) - 10) + ',' + (height + 45) + ')');
+        .attr('transform', 'translate(' + ((width / 2) - 10) + ',' + ((height + 45) - delta) + ')');
 
-    var x = (file_name === 'IP') ? -70 : -40;
+    var x = (file_name === 'IP') ? -70 : -50;
     d3graph_container.select('.y-title')
-        .attr('transform', 'translate(' + x + ',' + (height / 2) + '), rotate(-90)');
+        .attr('transform', 'translate(' + (x + delta) + ',' + (height / 2) + '), rotate(-90)');
 
 }
 
@@ -476,7 +489,7 @@ function updateXYtitlesPosition(width, height, file_name, d3graph_container) {
  * Update legend position and stack into column
  */
 function updateLegendPosition(width, file_name, d3graph_container) {
-    var delta = file_name === 'IP' ? 95 : 10;
+    var delta = file_name === 'IP' ? 95 : 50;
     var x = (width / 10) + delta;
 
     d3graph_container.select('.nv-legendWrap')
@@ -485,7 +498,19 @@ function updateLegendPosition(width, file_name, d3graph_container) {
         // stack them in column instead row
         var el = d3.select(this);
         el.attr('class', 'nv-series')
-            .attr('transform', 'translate(' + -50 + ',' + i * 25 + ')');
+            .attr('transform', 'translate(' + 0 + ',' + i * 25 + ')');
+        // if the legend is too long, wrap it.
+        if (d.key.length > 11) {
+            updateWrap('.nv-series', el);
+            el.selectAll('tspan').each(function (d, i) {
+                // since there is a rectangle before first tspan, on
+                // others we need to add 8px on the left (width of the rect)
+                if (i > 0) {
+                    d3.select(this).attr("x", 8);
+                }
+            });
+        }
+
     });
 }
 /**
@@ -525,13 +550,15 @@ function circlesToRectangles(d3graph_container) {
 }
 
 function updateFootnotePosition(width, height, d3graph_container) {
+    var delta = getResolution() < 1400 ? 20 : 0;
     d3graph_container.select('.footnote')
-        .attr('transform', 'translate(' + ((width / 10) + 30) + ',' + (height + 90) + ')');
+        .attr('transform', 'translate(' + ((width / 10) + 30) + ',' + ((height + 90) - delta) + ')');
 }
 
 module.exports = {
     isRenderedInStudio: isRenderedInStudio,
     getDimensions: getDimensions,
+    getResolution: getResolution,
 
     digits: digits,
     retrieve_dec: retrieve_dec,
@@ -547,5 +574,4 @@ module.exports = {
     updateLegendPosition: updateLegendPosition,
     updateFootnotePosition: updateFootnotePosition
 };
-
 },{}]},{},[1]);

@@ -32,7 +32,7 @@ function setChartsSpecs(charts_specs_data, sheet_name, chart_specifics) {
     var _length = _keys.length;
 
     // Other arrays are values
-    for (var i = 1; i < _length - 1; i++) {
+    for (var i = 1; i < _length; i++) {
         var _values = charts_specs_data['rows'][i];
         for (var j = 0; j < _values.length; j++) {
             chart_specifics['' + _keys[j] + ''] = _values[j];

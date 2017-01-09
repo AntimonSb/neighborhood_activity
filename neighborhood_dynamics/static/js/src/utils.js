@@ -1,6 +1,6 @@
 'use strict';
 
-function isRenderedInStudio($main_container){
+function isRenderedInStudio($main_container) {
     var studio_wrapper = $main_container.parents('.studio-xblock-wrapper');
     return studio_wrapper[0] ? true : false;
 }
@@ -13,8 +13,9 @@ function isRenderedInStudio($main_container){
  */
 function getDimensions($main_container, inStudio) {
     var chart = $main_container.find('.multibar-content')[0];
-    var width = chart.offsetWidth * 0.60,
-        height = width / 2.18;
+    const ratio = 2.8;
+    var width = chart.offsetWidth * 0.75,
+        height = width / ratio;
 
     // in this case, the chart is rendering in studio, so we'll take
     // first known container's width as a reference.
@@ -28,6 +29,14 @@ function getDimensions($main_container, inStudio) {
         width: width
     }
 }
+
+function getResolution() {
+    // TODO: if this starts to expand, use switch instead of if condition
+    if (window.matchMedia('(max-width: 1399px)').matches) {
+        return 1399;
+    }
+}
+
 
 function digits(str) {
     var num = parseInt(str, 10);
@@ -120,7 +129,7 @@ function wrap(text, width) {
  */
 function updateWrap(className, d3graph_container) {
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, 50], .1, .3);
+        .rangeRoundBands([0, 40], .1, .25);
 
     d3graph_container.selectAll(className + ' text')
         .call(wrap, x.rangeBand());
@@ -131,12 +140,13 @@ function updateWrap(className, d3graph_container) {
  */
 
 function updateXYtitlesPosition(width, height, file_name, d3graph_container) {
+    var delta = getResolution() < 1400 ? 5 : 0;
     d3graph_container.select('.x-title')
-        .attr('transform', 'translate(' + ((width / 2) - 10) + ',' + (height + 45) + ')');
+        .attr('transform', 'translate(' + ((width / 2) - 10) + ',' + ((height + 45) - delta) + ')');
 
-    var x = (file_name === 'IP') ? -70 : -40;
+    var x = (file_name === 'IP') ? -70 : -50;
     d3graph_container.select('.y-title')
-        .attr('transform', 'translate(' + x + ',' + (height / 2) + '), rotate(-90)');
+        .attr('transform', 'translate(' + (x + delta) + ',' + (height / 2) + '), rotate(-90)');
 
 }
 
@@ -144,7 +154,7 @@ function updateXYtitlesPosition(width, height, file_name, d3graph_container) {
  * Update legend position and stack into column
  */
 function updateLegendPosition(width, file_name, d3graph_container) {
-    var delta = file_name === 'IP' ? 95 : 10;
+    var delta = file_name === 'IP' ? 95 : 50;
     var x = (width / 10) + delta;
 
     d3graph_container.select('.nv-legendWrap')
@@ -153,7 +163,19 @@ function updateLegendPosition(width, file_name, d3graph_container) {
         // stack them in column instead row
         var el = d3.select(this);
         el.attr('class', 'nv-series')
-            .attr('transform', 'translate(' + -50 + ',' + i * 25 + ')');
+            .attr('transform', 'translate(' + 0 + ',' + i * 25 + ')');
+        // if the legend is too long, wrap it.
+        if (d.key.length > 11) {
+            updateWrap('.nv-series', el);
+            el.selectAll('tspan').each(function (d, i) {
+                // since there is a rectangle before first tspan, on
+                // others we need to add 8px on the left (width of the rect)
+                if (i > 0) {
+                    d3.select(this).attr("x", 8);
+                }
+            });
+        }
+
     });
 }
 /**
@@ -193,13 +215,15 @@ function circlesToRectangles(d3graph_container) {
 }
 
 function updateFootnotePosition(width, height, d3graph_container) {
+    var delta = getResolution() < 1400 ? 20 : 0;
     d3graph_container.select('.footnote')
-        .attr('transform', 'translate(' + ((width / 10) + 30) + ',' + (height + 90) + ')');
+        .attr('transform', 'translate(' + ((width / 10) + 30) + ',' + ((height + 90) - delta) + ')');
 }
 
 module.exports = {
     isRenderedInStudio: isRenderedInStudio,
     getDimensions: getDimensions,
+    getResolution: getResolution,
 
     digits: digits,
     retrieve_dec: retrieve_dec,
