@@ -147,7 +147,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
       });
     });
 
-    (function initUpdateProgressEvents() {
+    (function addUpdateProgressEventListeners() {
       var $document = $(document);
       var progress_bar = $document.find('#progress-bar');
       var continue_buttons = $document.find('.forward-progress');
