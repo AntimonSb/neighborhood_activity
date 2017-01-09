@@ -145,16 +145,17 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
       $("#continue_case").click(function() {
         parent.postMessage(JSON.stringify({action:'continue'}),'*');
       });
-
     });
 
-    (function updateProgress() {
-      var continue_buttons = document.getElementsByClassName('update-progress');
-      var progress_bar = document.getElementById('progress-bar');
+    (function initUpdateProgressEvents() {
+      var $document = $(document);
+      var continue_buttons = $document.find('.update-progress');
+      var progress_bar = $document.find('#progress-bar');
+
       for (var i = 0; i < continue_buttons.length; i++) {
-        continue_buttons[i].addEventListener('click', function () {
-          var progress_indicator = document.querySelector('.progress-indicator:not(.highlighted)');
-          progress_indicator.classList.add('highlighted');
+        $(continue_buttons[i]).on('click', function () {
+          var progress_indicator_to_highlight = $document.find('.progress-indicator').not('.highlighted').first();
+          progress_indicator_to_highlight.addClass('highlighted');
         });
       }
     })();
