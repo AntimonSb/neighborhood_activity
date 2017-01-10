@@ -5,7 +5,7 @@
 .neighborhood_dynamics_block .background {
   height: 100%;
   width: 100%;
-  background-repeat: no-repeat;
+  background: url('https://s3-us-west-2.amazonaws.com/mit-cre-edx/xblocks/neighborhood_dynamics/bg-static-int-street-grid_2x.jpg') no-repeat;
   background-size: cover;
 }
 
