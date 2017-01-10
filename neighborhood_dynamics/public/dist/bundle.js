@@ -9,6 +9,8 @@ global.initMultibarChart = function (runtime, element, data) {
     var isFirstLoad = true;
     var $element = $(element);
 
+    if($element.find('.charts-list').children().length > 0) { return; }
+
     var chart_sheet_names = [];
     var _charts = [];
     var specs_data;
