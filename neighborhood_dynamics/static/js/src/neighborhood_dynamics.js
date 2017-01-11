@@ -149,23 +149,31 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
 
     (function addUpdateProgressEventListeners(element) {
       var $element = $(element);
-      var progress_bar = $element.find('#progress-bar');
-      var continue_buttons = $element.find('.forward-progress');
+      var $continue_buttons = $element.find('.forward-progress');
 
-      for (var i = 0; i < continue_buttons.length; i++) {
-        $(continue_buttons[i]).on('click', function () {
-          var progress_indicator_to_highlight = $element.find('.progress-indicator').not('.highlighted').first();
-          progress_indicator_to_highlight.addClass('highlighted');
+      for (var i = 0; i < $continue_buttons.length; i++) {
+        $($continue_buttons[i]).on('click', function () {
+          var $progress_indicator_to_highlight = $element.find('.progress-indicator').not('.highlighted').first();
+          $progress_indicator_to_highlight.addClass('highlighted');
         });
       }
 
-      var back_buttons = $element.find('.backward-progress');
+      var $back_buttons = $element.find('.backward-progress');
 
-      for (var i = 0; i < back_buttons.length; i++) {
-        $(back_buttons[i]).on('click', function() {
-          var progress_indicator_to_unhighlight = $element.find('.progress-indicator.highlighted').last();
-          progress_indicator_to_unhighlight.removeClass('highlighted');
+      for (var i = 0; i < $back_buttons.length; i++) {
+        $($back_buttons[i]).on('click', function() {
+          var $progress_indicator_to_unhighlight = $element.find('.progress-indicator.highlighted').last();
+          $progress_indicator_to_unhighlight.removeClass('highlighted');
         });
       }
     })(element);
+
+    function addDownloadCaseKitEventListener(element) {
+      var $element = $(element);
+      var $download_button = $element.find('.download-case-kit-link');
+
+      $download_button.on('click', function() {
+        //send message to iframe
+      });
+    }
 }
