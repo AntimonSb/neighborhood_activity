@@ -374,6 +374,10 @@
   opacity: 1;
 }
 
+.neighborhood_dynamics_block .download-case-kit-link {
+  cursor: pointer;
+}
+
 /* Let's get this party started */
 ::-webkit-scrollbar { width: 10px; }
 /* Track */
