@@ -7,6 +7,9 @@ global.initMultibarChart = function (runtime, element, data) {
     var isFirstLoad = true;
     var $element = $(element);
 
+    // If the list exists, it means charts were rendered so we will not render them again, just let the user to continue where he left of.
+    if($element.find('.charts-list').children().length > 0) { return; }
+
     var chart_sheet_names = [];
     var _charts = [];
     var specs_data;
