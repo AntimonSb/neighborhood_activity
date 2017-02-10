@@ -1,199 +1,255 @@
 <div class="neighborhood_dynamics_block">
-  <div class="background">
-      <section class="begin section">
-        <div class="content-a">
-          <span class="activity">Activity</span>
-          <h1 class="header-text">
-            <strong>Neighborhood Dynamics in Panama City:</strong><br>Evaluating changes in household income and housing stock
-          </h1>
-          <div class="begin-container">
-            <button id="begin" class="forward-progress">Begin</button>
-          </div>
-        </div>
-      </section>
-      <section class="task1 section" style="display:none;">
-        <div class="content-wrapper">
-          <div class="content">
-            <p class="content-text">
-              San Felipe (which includes Casco Viejo) is enclosed by the districts of Santa Ana and El Chorillo. Together, these neighborhoods make up one of the densest and lowest income urban areas within Panama Metropolitan Region. 
+    <div class="background">
+        <section class="begin section">
+            <div class="content-a">
+                <span class="activity">Activity</span>
+                <h1 class="header-text">
+                    <strong>Neighborhood Dynamics in Panama City:</strong><br>Evaluating changes in household income and
+                    housing stock
+                </h1>
+                <div class="begin-container">
+                    <button id="begin" class="forward-progress">Begin</button>
+                </div>
+            </div>
+        </section>
+        <section class="task1 section" style="display:none;">
+            <div class="content-wrapper">
+                <div class="content">
+                    <p class="content-text">
+                        San Felipe (which includes Casco Viejo) is enclosed by the districts of Santa Ana and El
+                        Chorillo. Together, these neighborhoods make up one of the densest and lowest income urban areas
+                        within Panama Metropolitan Region.
               <span class="view-on-map">
                 <span class="view-on-map-text">View on map</span>
                 <span class="myicon-map"></span>
               </span>
-            </p>
-            <p class="content-text">
-              Over the past three census years, demographic and socioeconomic composition of Panama City neighborhoods have displayed noticable change. In particular, San Felipe, neighborhood containing the majority of Casco Viejo, has diverged relative to its surrounding areas.
-            </p>
-            <p class="content-text">
-              Using the neighborhood level census data contained in the <a class="download-case-kit-link">Case Kit</a>, analyze how median income has changed over time. In particular, provide and upper and lower bound for the 2010 median household income for each neighborhood. Note that these bounds are not included within the data provided, but can be calculated based on what is available to you.
-            </p>
-            <p class="content-text">
-              What is the household income in 2010 for the three districts in Panama? <span data-nesto="Recall that a median represents the middle value of ordered data. When using frequency data, order the bins from highest to lowest and locate the bin in which the middle value of total count exists." class="hint-link">Need a hint?...</span>
-            </p>
-            <div class="question-wrapper">
-              <div class="question">
-                <label class="task-label">San Felipe:</label>
-                <input type="text" id="san_felipe_lower" class="task-input left" placeholder="lower bound"/>
-                <div class="task-line"></div>
-                <input type="text" id="san_felipe_upper" class="task-input right" placeholder="upper bound"/>
-                <span id="task1_circle1" class="task-circle"></span>
-              </div>
-              <div class="question">
-                <label class="task-label">Santa Ana:</label>
-                <input type="text" id="santa_ana_lower" class="task-input left" placeholder="lower bound"/>
-                <div class="task-line"></div>
-                <input type="text" id="santa_ana_upper" class="task-input right" placeholder="upper bound"/>
-                <span id="task1_circle2" class="task-circle"></span>
-              </div>
-              <div class="question">
-                <label class="task-label">El Chorillo:</label>
-                <input type="text" id="el_chorillo_lower" class="task-input left" placeholder="lower bound"/>
-                <div class="task-line"></div>
-                <input type="text" id="el_chorillo_upper" class="task-input right" placeholder="upper bound"/>
-                <span id="task1_circle3" class="task-circle"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="page-navigation">
-          <div class="submit">
-            <button id="task1_submit" class="button submit">Submit</button>
-          </div>
-          <div class="pn-wrapper">
-            <button id="task1_back" class="button backward-progress">Back</button>
-            <button id="task1_continue" class="button forward-progress" disabled="true">Continue</button>
-          </div>
-        </div>
-      </section>
-      <section class="charts section" style="display:none;">
-        <div class="content-wrapper">
-          <div class="content">
-            <div class="multibar-chart-container">
-              <div class="header">
-                <div class="navigation">
-                  <ul class="charts-list">
-                  </ul>
+                    </p>
+                    <p class="content-text">
+                        Over the past three census years, demographic and socioeconomic composition of Panama City
+                        neighborhoods have displayed noticable change. In particular, San Felipe, neighborhood
+                        containing the majority of Casco Viejo, has diverged relative to its surrounding areas.
+                    </p>
+                    <p class="content-text">
+                        Using the neighborhood level census data contained in the <a class="download-case-kit-link">Case
+                        Kit</a>, analyze how median income has changed over time. In particular, provide and upper and
+                        lower bound for the 2010 median household income for each neighborhood. Note that these bounds
+                        are not included within the data provided, but can be calculated based on what is available to
+                        you.
+                    </p>
+                    <p class="content-text">
+                        What is the household income in 2010 for the three districts in Panama? <span
+                            data-nesto="Recall that a median represents the middle value of ordered data. When using frequency data, order the bins from highest to lowest and locate the bin in which the middle value of total count exists."
+                            class="hint-link">Need a hint?...</span>
+                    </p>
+                    <div class="question-wrapper">
+                        <div class="question">
+                            <label class="task-label">San Felipe:</label>
+                            <input type="text" id="san_felipe_lower" class="task-input left" placeholder="lower bound"/>
+                            <div class="task-line"></div>
+                            <input type="text" id="san_felipe_upper" class="task-input right"
+                                   placeholder="upper bound"/>
+                            <span id="task1_circle1" class="task-circle"></span>
+                        </div>
+                        <div class="question">
+                            <label class="task-label">Santa Ana:</label>
+                            <input type="text" id="santa_ana_lower" class="task-input left" placeholder="lower bound"/>
+                            <div class="task-line"></div>
+                            <input type="text" id="santa_ana_upper" class="task-input right" placeholder="upper bound"/>
+                            <span id="task1_circle2" class="task-circle"></span>
+                        </div>
+                        <div class="question">
+                            <label class="task-label">El Chorillo:</label>
+                            <input type="text" id="el_chorillo_lower" class="task-input left"
+                                   placeholder="lower bound"/>
+                            <div class="task-line"></div>
+                            <input type="text" id="el_chorillo_upper" class="task-input right"
+                                   placeholder="upper bound"/>
+                            <span id="task1_circle3" class="task-circle"></span>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="multibar-content">
-                <div class="multibar-chart">
-                  <svg></svg>
+            </div>
+            <div class="page-navigation">
+                <div class="submit">
+                    <button id="task1_submit" class="button submit">Submit</button>
                 </div>
-              </div>
+                <div class="pn-wrapper">
+                    <button id="task1_back" class="button backward-progress">Back</button>
+                    <button id="task1_continue" class="button forward-progress" disabled="true">Continue</button>
+                </div>
             </div>
-          </div>
+        </section>
+        <section class="charts section" style="display:none;">
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="multibar-chart-container">
+                        <div class="header">
+                            <div class="navigation">
+                                <ul class="charts-list">
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="multibar-content">
+                            <div class="multibar-chart">
+                                <svg></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-navigation">
+                <div class="pn-wrapper">
+                    <button id="charts_back" class="button backward-progress">Back</button>
+                    <button id="charts_continue" class="button forward-progress">Continue</button>
+                </div>
+            </div>
+        </section>
+        <section class="task2 section" style="display:none;">
+            <div class="content-wrapper">
+                <div class="content">
+                    <p class="content-text">
+                        Using data on the proportion of housing that is condemned in each district (see "data" folder in
+                        the <a class="download-case-kit-link">Case Kit</a>), calculate the percentage change in the
+                        proportions of housing that is condemned from 1990 and 2000, 2000 and 2010, 1990 to 2010.
+                    </p>
+                    <div class="qa-wrapper">
+                        <div class="qa-container">
+                            <div class="question"><label class="task-label">San Felipe:</label></div>
+                        </div>
+                        <div class="qa-container">
+                            <div class="input-a">
+                                <label class="task-label-small">1990 to 2000:</label>
+                                <input id="san_felipe_1" type="text" class="task-input"
+                                       placeholder="percentage change"/>
+                                <span id="task2_circle1" class="task-circle"></span>
+                            </div>
+                            <div class="input-a">
+                                <label class="task-label-small">2000 to 2010:</label>
+                                <input id="san_felipe_2" type="text" class="task-input"
+                                       placeholder="percentage change"/>
+                                <span id="task2_circle2" class="task-circle"></span>
+                            </div>
+                            <div class="input-a">
+                                <label class="task-label-small">1990 to 2010:</label>
+                                <input id="san_felipe_3" type="text" class="task-input"
+                                       placeholder="percentage change"/>
+                                <span id="task2_circle3" class="task-circle"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qa-wrapper">
+                        <div class="qa-container">
+                            <div class="question">
+                                <label class="task-label">Santa Ana:</label>
+                            </div>
+                        </div>
+                        <div class="qa-container">
+                            <div>
+                                <label class="task-label-small">1990 to 2000:</label>
+                                <input id="santa_ana_1" type="text" class="task-input" placeholder="percentage change"/>
+                                <span id="task2_circle4" class="task-circle"></span>
+                            </div>
+                            <div>
+                                <label class="task-label-small">2000 to 2010:</label>
+                                <input id="santa_ana_2" type="text" class="task-input" placeholder="percentage change"/>
+                                <span id="task2_circle5" class="task-circle"></span>
+                            </div>
+                            <div>
+                                <label class="task-label-small">1990 to 2010:</label>
+                                <input id="santa_ana_3" type="text" class="task-input" placeholder="percentage change"/>
+                                <span id="task2_circle6" class="task-circle"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qa-wrapper">
+                        <div class="qa-container">
+                            <div class="question"><label class="task-label">El Chorillo:</label></div>
+                        </div>
+                        <div class="qa-container">
+                            <div>
+                                <label class="task-label-small">1990 to 2000:</label>
+                                <input id="el_chorillo_1" type="text" class="task-input"
+                                       placeholder="percentage change"/>
+                                <span id="task2_circle7" class="task-circle"></span>
+                            </div>
+                            <div>
+                                <label class="task-label-small">2000 to 2010:</label>
+                                <input id="el_chorillo_2" type="text" class="task-input"
+                                       placeholder="percentage change"/>
+                                <span id="task2_circle8" class="task-circle"></span>
+                            </div>
+                            <div>
+                                <label class="task-label-small">1990 to 2010:</label>
+                                <input id="el_chorillo_3" type="text" class="task-input"
+                                       placeholder="percentage change"/>
+                                <span id="task2_circle9" class="task-circle"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-navigation">
+                <div class="submit">
+                    <button id="task2_submit" class="button submit">Submit</button>
+                </div>
+                <div class="pn-wrapper">
+                    <button id="task2_back" class="button backward-progress">Back</button>
+                    <button id="task2_continue" class="button forward-progress" disabled="true">Continue</button>
+                </div>
+            </div>
+        </section>
+        <section class="conclusion section" style="display:none;">
+            <div class="content-wrapper">
+                <div class="content">
+                    <p class="content-text">
+                        Housing stock within San Felipe changed dramatically over the 20 year period of 1990 to 2010.
+                        The number of housing units decreased by more than half with rental stock taking the largest
+                        hit, decreasing by over 70%. Owner-occupied housing units rose from 61 units to 93 units.
+                        Construction activity picked up with the number of units under construction increasing from 11
+                        to 90 by 2010!
+                    </p>
+                    <p class="content-text">
+                        The number of condemned units rose in 2000 but declined greatly by 2010. This is likely a result
+                        of the tenant law in 1997 and the increase in development beginning in the early 2000s. As
+                        non-rent paying tenants were removed, some units were likely declared condemned. These condemned
+                        units were rehabilitated, repurposed for uses other than housing, or left vacant. In proportion
+                        terms condemned housing made up a slightly larger amount of the overall housing units in 2010
+                        going from 25% to 28%. The tenant law also may have influenced the decline in rental units as
+                        the housing stock was likely redeveloped to its highest and best use.
+                    </p>
+                    <p class="content-text">
+                        The amount of rental and owner-occupied housing units expanded within El Chorillo over the 20
+                        year period contributing to an overall growth in stock of 18%. Looking at the units under
+                        construction over the three times periods, it appears there was a construction boom around the
+                        2000s that died off by 2010.
+                    </p>
+                    <p class="content-text">
+                        Overall, Santa Ana lost housing units but the number of rental units nearly doubled! This is
+                        likely the result of owner-occupied units becoming rental units.
+                    </p>
+                    <p class="content-text">
+                        The amount of rental and owner-occupied housing units expanded within El Chorillo over the 20
+                        year period contributing to an overall growth in stock of 18%. Looking at the units under
+                        construction over the three times periods, it appears there was a construction around the 2000s
+                        that died off by 2010.
+                    </p>
+                </div>
+            </div>
+            <div class="page-navigation">
+                <div class="pn-wrapper">
+                    <button id="continue_case" class="button forward-progress">Continue Case</button>
+                </div>
+            </div>
+        </section>
+        <div class="progress-wrapper">
+            <ul id="activity-progress">
+                <li class="progress-indicator highlighted">&nbsp;</li>
+                <li class="progress-indicator">&nbsp;</li>
+                <li class="progress-indicator">&nbsp;</li>
+                <li class="progress-indicator">&nbsp;</li>
+                <li class="progress-indicator">&nbsp;</li>
+            </ul>
         </div>
-        <div class="page-navigation">
-          <div class="pn-wrapper">
-            <button id="charts_back" class="button backward-progress">Back</button>
-            <button id="charts_continue" class="button forward-progress">Continue</button>
-          </div>
-        </div>
-      </section>
-      <section class="task2 section" style="display:none;">
-        <div class="content-wrapper">
-          <div class="content">
-            <p class="content-text">
-              Using data on the proportion of housing that is condemned in each district (see "data" folder in the <a class="download-case-kit-link">Case Kit</a>), calculate the percentage change in the proportions of housing that is condemned from 1990 and 2000, 2000 and 2010, 1990 to 2010.
-            </p>
-            <div class="question"><label class="task-label">San Felipe:</label></div>
-            <div class="answers">
-              <label class="task-label-small">1990 to 2000:</label>
-              <input id="san_felipe_1" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle1" class="task-circle"></span>
-            </div>
-            <div class="answers">
-              <label class="task-label-small">2000 to 2010:</label>
-              <input id="san_felipe_2" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle2" class="task-circle"></span>
-            </div>
-            <div class="answers">
-              <label class="task-label-small">1990 to 2010:</label>
-              <input id="san_felipe_3" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle3" class="task-circle"></span>
-            </div>
-
-            <div class="question"><label class="task-label">Santa Ana:</label></div>
-            <div class="answers">
-              <label class="task-label-small">1990 to 2000:</label>
-              <input id="santa_ana_1" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle4" class="task-circle"></span>
-            </div>
-            <div class="answers">
-              <label class="task-label-small">2000 to 2010:</label>
-              <input id="santa_ana_2" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle5" class="task-circle"></span>
-            </div>
-            <div class="answers">
-              <label class="task-label-small">1990 to 2010:</label>
-              <input id="santa_ana_3" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle6" class="task-circle"></span>
-            </div>
-
-            <div class="question"><label class="task-label">El Chorillo:</label></div>
-            <div class="answers">
-              <label class="task-label-small">1990 to 2000:</label>
-              <input id="el_chorillo_1" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle7" class="task-circle"></span>
-            </div>
-            <div class="answers">
-              <label class="task-label-small">2000 to 2010:</label>
-              <input id="el_chorillo_2" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle8" class="task-circle"></span>
-            </div>
-            <div class="answers">
-              <label class="task-label-small">1990 to 2010:</label>
-              <input id="el_chorillo_3" type="text" class="task-input" placeholder="percentage change"/>
-              <span id="task2_circle9" class="task-circle"></span>
-            </div>
-          </div>
-          
-        </div>
-        <div class="page-navigation">
-          <div class="submit">
-            <button id="task2_submit" class="button submit">Submit</button>
-          </div>
-          <div class="pn-wrapper">
-            <button id="task2_back" class="button backward-progress">Back</button>
-            <button id="task2_continue" class="button forward-progress" disabled="true">Continue</button>
-          </div>
-        </div>
-      </section>
-      <section class="conclusion section" style="display:none;">
-        <div class="content-wrapper">
-          <div class="content">
-            <p class="content-text">
-              Housing stock within San Felipe changed dramatically over the 20 year period of 1990 to 2010. The number of housing units decreased by more than half with rental stock taking the largest hit, decreasing by over 70%. Owner-occupied housing units rose from 61 units to 93 units. Construction activity picked up with the number of units under construction increasing from 11 to 90 by 2010!
-            </p>
-            <p class="content-text">
-              The number of condemned units rose in 2000 but declined greatly by 2010. This is likely a result of the tenant law in 1997 and the increase in development beginning in the early 2000s. As non-rent paying tenants were removed, some units were likely declared condemned. These condemned units were rehabilitated, repurposed for uses other than housing, or left vacant. In proportion terms condemned housing made up a slightly larger amount of the overall housing units in 2010 going from 25% to 28%. The tenant law also may have influenced the decline in rental units as the housing stock was likely redeveloped to its highest and best use.
-            </p>
-            <p class="content-text">
-              The amount of rental and owner-occupied housing units expanded within El Chorillo over the 20 year period contributing to an overall growth in stock of 18%. Looking at the units under construction over the three times periods, it appears there was a construction boom around the 2000s that died off by 2010.
-            </p>
-            <p class="content-text">
-              Overall, Santa Ana lost housing units but the number of rental units nearly doubled! This is likely the result of owner-occupied units becoming rental units.
-            </p>
-            <p class="content-text">
-              The amount of rental and owner-occupied housing units expanded within El Chorillo over the 20 year period contributing to an overall growth in stock of 18%. Looking at the units under construction over the three times periods, it appears there was a construction around the 2000s that died off by 2010.
-            </p>
-          </div>
-        </div>
-        <div class="page-navigation">
-          <div class="pn-wrapper">
-            <button id="continue_case" class="button forward-progress">Continue Case</button>
-          </div>  
-        </div>
-      </section>
-      <div class="progress-wrapper">
-        <ul id="activity-progress">
-          <li class="progress-indicator highlighted">&nbsp;</li>
-          <li class="progress-indicator">&nbsp;</li>
-          <li class="progress-indicator">&nbsp;</li>
-          <li class="progress-indicator">&nbsp;</li>
-          <li class="progress-indicator">&nbsp;</li>
-        </ul>
-      </div>
     </div>
-  </div>
+</div>
 </div>

@@ -248,7 +248,7 @@
   display: inline-block;
   vertical-align: middle;
   min-width: 157px;
-  margin-bottom: 0;
+  margin: 7px 0 0 0;
 }
 
 .neighborhood_dynamics_block .task-label-small{
@@ -273,6 +273,9 @@
   width: 166px;
   display: inline-block;
   vertical-align: middle;
+  margin: 0 0 10px 0;
+  outline: none;
+  box-shadow: none;
 }
 
 .neighborhood_dynamics_block .task-line{
@@ -293,15 +296,23 @@
   display: inline-block;
   background: #880d0f;
   vertical-align: middle;
-  margin-left: 10px;
+  margin: 0 0 10px 10px;
+}
+
+.neighborhood_dynamics_block .qa-wrapper {
+  padding-top: 15px;
+}
+
+.neighborhood_dynamics_block .qa-wrapper .qa-container {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.neighborhood_dynamics_block .qa-wrapper .container .label {
 }
 
 .neighborhood_dynamics_block .question-wrapper {
   margin-top: 30px;
-}
-
-.neighborhood_dynamics_block .question{
-  padding-top: 12px;
 }
 
 .neighborhood_dynamics_block .answers{
