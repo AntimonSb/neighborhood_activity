@@ -136,7 +136,7 @@ class NeighborhoodDynamicsXBlock(XBlock, FileUploadMixin):
 
         frag = Fragment(html)
         frag.add_css_url(
-            self.runtime.local_resource_url(
+             self.runtime.local_resource_url(
                 self, 'public/css/neighborhood_dynamics.css'))
         frag.add_css(self.resource_string("static/css/multibar_charts.css"))
         frag.add_css(self.resource_string("static/css/nvd3.css"))
