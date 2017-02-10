@@ -182,12 +182,13 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
         }
     })(element);
 
-    (function addDownloadCaseKitEventListener(element) {
-        var $element = $(element);
-        var $download_button = $element.find('.download-case-kit-link');
-
-        $download_button.on('click', function () {
-            parent.postMessage(JSON.stringify({action: 'downloadCaseKitLink'}), '*');
-        });
-    })(element);
+    /* this code will not be used temporarily. */
+    //(function addDownloadCaseKitEventListener(element) {
+    //    var $element = $(element);
+    //    var $download_button = $element.find('.download-case-kit-link');
+    //
+    //    $download_button.on('click', function () {
+    //        parent.postMessage(JSON.stringify({action: 'downloadCaseKitLink'}), '*');
+    //    });
+    //})(element);
 }
