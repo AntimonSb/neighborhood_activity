@@ -5,7 +5,13 @@
 .content-wrapper {}
 
 .xblock-render .neighborhood_dynamics_block {
-  display: none;
+  position: relative;
+  height: 540px;
+  height: 100%;
+}
+
+.xblock-render .neighborhood_dynamics_block .background {
+  position: relative;
 }
 
 .neighborhood_dynamics_block .background {
