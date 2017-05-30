@@ -10,7 +10,6 @@ function StudioEdit(runtime, element) {
         data.append('display_name', $element.find('input[name=display_name]').val());
         data.append('display_description', $element.find('input[name=display_description]').val());
         data.append('thumbnail', $element.find('input[name=thumbnail]')[0].files[0]);
-        data.append('excel', $element.find('input[name=excel]')[0].files[0]);
         data.append('san_felipe_lower', $element.find('input[name=san_felipe_lower]').val());
         data.append('san_felipe_upper', $element.find('input[name=san_felipe_upper]').val());
         data.append('santa_ana_lower', $element.find('input[name=santa_ana_lower]').val());
@@ -38,9 +37,6 @@ function StudioEdit(runtime, element) {
             contentType: false
         }).done(function (response) {
             runtime.notify('save', {state: 'end'});
-            console.log("response", response);
-            console.log("workbook", response['json_data']);
-            console.log("workbook", response['list']);
         });
     });
 
