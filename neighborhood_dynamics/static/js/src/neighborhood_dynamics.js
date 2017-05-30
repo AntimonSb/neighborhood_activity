@@ -77,7 +77,6 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
             $(".begin").hide();
             $(".task1").show();
             $(".content").scrollTop(0);
-
         });
         $("#task1_back").click(function () {
             $(".task1").hide();
@@ -86,11 +85,8 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
         });
         $("#task1_continue").click(function () {
             $(".task1").hide();
-            $(".charts").show();
-            $(".content").scrollTop(0);
-            if (!$(".navigation-title").text()) {
-                initMultibarChart(runtime, element, data_from_py);
-            }
+            $(".task2").show();
+            $(".content").scrollTop(0);            
         });
         $("#task1_submit").click(function () {
             var handlerUrl = runtime.handlerUrl(element, 'submit_task1');
@@ -112,20 +108,9 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
                 }
             });
         });
-
-        $("#charts_back").click(function () {
-            $(".charts").hide();
-            $(".task1").show();
-            $(".content").scrollTop(0);
-        });
-        $("#charts_continue").click(function () {
-            $(".charts").hide();
-            $(".task2").show();
-            $(".content").scrollTop(0);
-        });
         $("#task2_back").click(function () {
             $(".task2").hide();
-            $(".charts").show();
+            $(".task1").show();
             $(".content").scrollTop(0);
         });
         $("#task2_continue").click(function () {
