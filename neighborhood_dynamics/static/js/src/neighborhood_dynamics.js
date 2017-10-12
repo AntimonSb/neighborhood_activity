@@ -171,7 +171,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
     /* this code will not be used temporarily. */
     //(function addDownloadCaseKitEventListener(element) {
     //    var $element = $(element);
-    //    var fbegin = $element.find('.download-case-kit-link');
+    //    var $download_button = $element.find('.download-case-kit-link');
     //
     //    $download_button.on('click', function () {
     //        parent.postMessage(JSON.stringify({action: 'downloadCaseKitLink'}), '*');
