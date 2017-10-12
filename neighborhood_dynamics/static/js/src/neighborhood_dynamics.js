@@ -77,6 +77,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
             $(".begin").hide();
             $(".task1").show();
             $(".content").scrollTop(0);
+            parent.postMessage(JSON.stringify({action: 'loadMap'}), '*');
         });
         $("#task1_back").click(function () {
             $(".task1").hide();
@@ -86,7 +87,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
         $("#task1_continue").click(function () {
             $(".task1").hide();
             $(".task2").show();
-            $(".content").scrollTop(0);            
+            $(".content").scrollTop(0);
         });
         $("#task1_submit").click(function () {
             var handlerUrl = runtime.handlerUrl(element, 'submit_task1');
@@ -142,7 +143,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
             });
         });
         $("#continue_case").click(function () {
-            parent.postMessage(JSON.stringify({action: 'continue'}), '*');
+            parent.postMessage(JSON.stringify({action: 'continue', sourceBlock: 'neighborhood_dynamics'}), '*');
         });
     });
 
@@ -170,7 +171,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
     /* this code will not be used temporarily. */
     //(function addDownloadCaseKitEventListener(element) {
     //    var $element = $(element);
-    //    var $download_button = $element.find('.download-case-kit-link');
+    //    var fbegin = $element.find('.download-case-kit-link');
     //
     //    $download_button.on('click', function () {
     //        parent.postMessage(JSON.stringify({action: 'downloadCaseKitLink'}), '*');
