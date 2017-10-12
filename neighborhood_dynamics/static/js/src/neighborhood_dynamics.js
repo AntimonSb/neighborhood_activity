@@ -143,7 +143,7 @@ function NeighborhoodDynamicsXBlock(runtime, element, data_from_py) {
             });
         });
         $("#continue_case").click(function () {
-            parent.postMessage(JSON.stringify({action: 'continue', sourceBlock: 'neighborhood_dynamics'}), '*');
+            parent.postMessage(JSON.stringify({action: 'continue', didUsePanamaMap: true}), '*');
         });
     });
 
